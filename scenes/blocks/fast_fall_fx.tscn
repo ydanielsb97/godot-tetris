@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://4qyj8j5dc433"]
+
+[ext_resource type="Script" uid="uid://cjqy33wdw7pge" path="res://scenes/blocks/fast_fall_fx.gd" id="10_f8sgf"]
+
+[sub_resource type="Curve" id="Curve_kpkki"]
+_data = [Vector2(0.0113636, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+emitting = false
+amount = 10
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, -300)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+angular_velocity_min = 50.0
+angular_velocity_max = 100.0
+damping_min = 50.0
+damping_max = 100.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_kpkki")
+script = ExtResource("10_f8sgf")

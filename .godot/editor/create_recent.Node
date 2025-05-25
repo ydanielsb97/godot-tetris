@@ -1,0 +1,12 @@
+FastFallFX
+CPUParticles2D
+AnimationPlayer
+GPUParticles2D
+AnimatedSprite2D
+Node2D
+CharacterBody2D
+CollisionShape2D
+StaticBody2D
+Sprite2D
+Timer
+TileMapLayer

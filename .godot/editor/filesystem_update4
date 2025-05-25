@@ -1,0 +1,7 @@
+res://scenes/levels/level_1/level_1.tscn
+res://globals/grid_manager.gd
+res://scenes/blocks/tetromino.gd
+res://scenes/blocks/single_block.tscn
+res://scenes/blocks/fast_fall_fx.tscn
+res://scenes/blocks/destroy_fx.tscn
+res://scenes/levels/level_1/level_1.gd

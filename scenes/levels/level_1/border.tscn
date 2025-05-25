@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://lan0bk0gw7ld"]
+
+[ext_resource type="Texture2D" uid="uid://dla07ym306ib" path="res://assets/images/Border.png" id="1_2eigf"]
+
+[node name="Border" type="Sprite2D"]
+texture = ExtResource("1_2eigf")
+offset = Vector2(150, 300)
+region_enabled = true
+region_rect = Rect2(31, 81, 338, 639)

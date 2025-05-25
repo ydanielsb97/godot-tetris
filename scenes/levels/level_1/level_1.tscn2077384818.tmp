@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcaugkfbvcxcw"]
+
+[ext_resource type="Script" uid="uid://br3dn6u4iug0o" path="res://scenes/levels/level_1/level_1.gd" id="1_5o1mp"]
+[ext_resource type="Texture2D" uid="uid://ddbwsg68tqxo0" path="res://assets/images/Background.png" id="1_x3ahk"]
+[ext_resource type="PackedScene" uid="uid://lan0bk0gw7ld" path="res://scenes/levels/level_1/border.tscn" id="3_5o1mp"]
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_5o1mp")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+texture = ExtResource("1_x3ahk")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Border" parent="." instance=ExtResource("3_5o1mp")]
+position = Vector2(426, 25)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

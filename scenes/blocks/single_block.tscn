@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbuqylo18jrih"]
+
+[ext_resource type="Script" uid="uid://c2k42x3wbcedu" path="res://scenes/blocks/single_block.gd" id="1_tlkrg"]
+[ext_resource type="Texture2D" uid="uid://dm06xnji8h0r5" path="res://assets/images/Tetromino_block2_4.png" id="1_ww16w"]
+
+[sub_resource type="Animation" id="Animation_tlkrg"]
+resource_name = "destroy"
+length = 0.5
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [true],
+"method": &"toggle_fire"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_esr72"]
+_data = {
+&"destroy": SubResource("Animation_tlkrg")
+}
+
+[node name="SingleBlock" type="Sprite2D"]
+texture = ExtResource("1_ww16w")
+region_enabled = true
+region_rect = Rect2(45, 45, 30, 30)
+script = ExtResource("1_tlkrg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_esr72")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

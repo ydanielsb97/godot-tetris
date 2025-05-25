@@ -16,7 +16,7 @@ A clean and responsive Tetris clone built with **Godot Engine**, featuring the 7
 
 ## 🧱 Tetromino Assets
 
-Block textures used in this project were created by [**Moxica**](https://moxica.itch.io/tetrominoes).  
+Block textures used in this project were created by [**Moxica**](https://itch.io/profile/moxica).  
 You can find the asset pack here:  
 🔗 https://moxica.itch.io/tetrominoes
 

@@ -14,5 +14,6 @@ func set_block(b: SingleBlock) -> void:
 	block.grid_coords = coords
 
 func destroy_block() -> void:
+	if !block: return
 	block.destroy()
 	block = null

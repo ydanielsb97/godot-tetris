@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://h32gkmdjlcyj"]
+
+[ext_resource type="PackedScene" uid="uid://lan0bk0gw7ld" path="res://scenes/levels/level_1/border.tscn" id="1_sq0em"]
+[ext_resource type="Texture2D" uid="uid://dla07ym306ib" path="res://assets/images/Border.png" id="2_1i64n"]
+[ext_resource type="Texture2D" uid="uid://ddbwsg68tqxo0" path="res://assets/images/Background.png" id="3_najyh"]
+[ext_resource type="Script" uid="uid://l3bwpe43ph1m" path="res://scenes/game_ui/next_tetromino.gd" id="4_hk0ve"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1i64n"]
+load_path = "res://.godot/imported/Background.png-5d8bd16cba4ceaf0e8a84382138da42f.ctex"
+
+[node name="GameUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Border" parent="." instance=ExtResource("1_sq0em")]
+unique_name_in_owner = true
+position = Vector2(426, 25)
+
+[node name="Grid" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+texture = ExtResource("3_najyh")
+region_enabled = true
+region_rect = Rect2(50, 100, 300, 600)
+
+[node name="ColorRect" type="ColorRect" parent="Grid"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -300.0
+offset_right = -150.0
+offset_bottom = -300.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.533333)
+
+[node name="NextTetromino" type="Node2D" parent="."]
+script = ExtResource("4_hk0ve")
+
+[node name="NextTetrominoBackground" type="Sprite2D" parent="NextTetromino"]
+position = Vector2(821, 85)
+texture = SubResource("CompressedTexture2D_1i64n")
+region_enabled = true
+region_rect = Rect2(50, 100, 120, 120)
+
+[node name="ColorRect" type="ColorRect" parent="NextTetromino/NextTetrominoBackground"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -60.0
+offset_right = -60.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.533333)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NextTetromino"]
+offset_left = 747.0
+offset_top = 11.0
+offset_right = 896.0
+offset_bottom = 159.0
+texture = ExtResource("2_1i64n")
+region_rect = Rect2(36, 86, 329, 628)
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15

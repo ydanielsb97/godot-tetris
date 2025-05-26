@@ -1,20 +1,55 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcaugkfbvcxcw"]
+[gd_scene load_steps=5 format=3 uid="uid://dcaugkfbvcxcw"]
 
 [ext_resource type="Script" uid="uid://br3dn6u4iug0o" path="res://scenes/levels/level_1/level_1.gd" id="1_5o1mp"]
-[ext_resource type="Texture2D" uid="uid://ddbwsg68tqxo0" path="res://assets/images/Background.png" id="1_x3ahk"]
-[ext_resource type="PackedScene" uid="uid://lan0bk0gw7ld" path="res://scenes/levels/level_1/border.tscn" id="3_5o1mp"]
+[ext_resource type="Texture2D" uid="uid://dxoeew6poflmg" path="res://assets/images/Pattern03.png" id="2_spwf2"]
+[ext_resource type="PackedScene" uid="uid://h32gkmdjlcyj" path="res://scenes/game_ui/game_ui.tscn" id="3_5o1mp"]
+[ext_resource type="AudioStream" uid="uid://bvnh2t2shs80w" path="res://assets/audios/tetris.mp3" id="4_spwf2"]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_5o1mp")
 
-[node name="Background" type="Sprite2D" parent="."]
-position = Vector2(576, 324)
-texture = ExtResource("1_x3ahk")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="BackgroundPattern" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_spwf2")
+expand_mode = 2
+stretch_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 0.639216)
+
+[node name="Level" type="CanvasLayer" parent="."]
+
+[node name="Timer" type="Timer" parent="Level"]
 autostart = true
 
-[node name="Border" parent="." instance=ExtResource("3_5o1mp")]
-position = Vector2(426, 25)
+[node name="ColorRect" type="ColorRect" parent="Level"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 0.435294)
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="GameUI" parent="Level" instance=ExtResource("3_5o1mp")]
+
+[node name="LogicalGrid" type="Node2D" parent="Level"]
+position = Vector2(426, 24)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
+stream = ExtResource("4_spwf2")
+autoplay = true
+
+[connection signal="timeout" from="Level/Timer" to="." method="_on_timer_timeout"]

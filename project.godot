@@ -18,6 +18,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 GridManager="*res://globals/grid_manager.gd"
+SignalHub="*res://globals/signal_handler.gd"
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [file_customization]
 
@@ -61,4 +67,6 @@ speed_up={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+rendering_device/driver="opengl3"
+rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"

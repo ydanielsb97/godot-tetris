@@ -2,77 +2,9 @@ extends Node2D
 
 class_name Tetromino
 
-enum TetrominoType {
-	I,
-	O,
-	T,
-	L,
-	J,
-	S,
-	Z
-}
 
 const FAST_FALL_FX = preload("res://scenes/blocks/fast_fall_fx.tscn")
 const SINGLE_BLOCK = preload("res://scenes/blocks/single_block.tscn")
-
-const TETROMINO_SHAPES := {
-	TetrominoType.I: {
-		"texture": preload("res://assets/images/Tetromino_block2_1.png"),
-		"coords": [
-			[Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)],
-			[Vector2i(1, 1), Vector2i(1, 0), Vector2i(1, 2), Vector2i(1, 3)]
-		]
-	},
-	TetrominoType.O: {
-		"texture": preload("res://assets/images/Tetromino_block2_6.png"),
-		"coords": [
-			[Vector2i(1, 0), Vector2i(2, 0), Vector2i(1, 1), Vector2i(2, 1)]
-		]
-	},
-	TetrominoType.T: {
-		"texture": preload("res://assets/images/Tetromino_block2_3.png"),
-		"coords": [
-			[Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1)],
-			[Vector2i(2, 1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2)],
-			[Vector2i(1, 2), Vector2i(2, 1), Vector2i(1, 1), Vector2i(0, 1)],
-			[Vector2i(0, 1), Vector2i(1, 2), Vector2i(1, 1), Vector2i(1, 0)]
-		]
-	},
-	TetrominoType.L: {
-		"texture": preload("res://assets/images/Tetromino_block2_7.png"),
-		"coords": [
-			[Vector2i(2, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1)],
-			[Vector2i(0, 0), Vector2i(1, 2), Vector2i(1, 1), Vector2i(1, 0)],
-			[Vector2i(0, 2), Vector2i(2, 1), Vector2i(1, 1), Vector2i(0, 1)],
-			[Vector2i(2, 2), Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2)]
-		]
-	},
-	TetrominoType.J: {
-		"texture": preload("res://assets/images/Tetromino_block2_2.png"),
-		"coords": [
-			[Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1)],
-			[Vector2i(1, 0), Vector2i(1, 2), Vector2i(1, 1), Vector2i(0, 2)],
-			[Vector2i(2, 2), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1)],
-			[Vector2i(1, 0), Vector2i(1, 2), Vector2i(1, 1), Vector2i(2, 0)]
-		]
-	},
-	TetrominoType.S: {
-		"texture": preload("res://assets/images/Tetromino_block2_5.png"),
-		"coords": [
-			[Vector2i(1, 0), Vector2i(2, 0), Vector2i(0, 1), Vector2i(1, 1)],
-			[Vector2i(1, 1), Vector2i(1, 0), Vector2i(2, 1), Vector2i(2, 2)]
-		]
-	},
-	TetrominoType.Z: {
-		"texture": preload("res://assets/images/Tetromino_block2_4.png"),
-		"coords": [
-			[Vector2i(0, 1), Vector2i(1, 1), Vector2i(1, 2), Vector2i(2, 2)],
-			[Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(0, 2)]
-		]
-	}
-}
-
-
 
 const GRID_SIZE_Y: int = 4
 const GRID_SIZE_X: int = 4
@@ -80,12 +12,13 @@ const GRID_SIZE_X: int = 4
 var block_texture: CompressedTexture2D
 var relative_blocks: Array = []
 var game_level: Node
-var current_tetromino_shape: TetrominoType
+var current_tetromino_shape: TetrominoHelper.TetrominoType
 var current_index_shape: int = 0
 
-func setup(coords_grid: Vector2i) -> void:
-	current_tetromino_shape = get_random_tetromino()
-	var tetromino = TETROMINO_SHAPES[current_tetromino_shape]
+func setup(coords_grid: Vector2i, tetromino_shape: TetrominoHelper.TetrominoType) -> void:
+	
+	current_tetromino_shape = tetromino_shape
+	var tetromino = TetrominoHelper.TETROMINO_SHAPES[current_tetromino_shape]
 	
 	block_texture = tetromino["texture"]
 	var random_tetromino: Array = tetromino["coords"][current_index_shape]
@@ -125,7 +58,7 @@ func rotate_custom():
 	for child: SingleBlock in get_children():
 		all_coords.append(child.grid_coords)
 		
-	var tetromino = TETROMINO_SHAPES[current_tetromino_shape]["coords"]
+	var tetromino = TetrominoHelper.TETROMINO_SHAPES[current_tetromino_shape]["coords"]
 	var array_coords = tetromino[current_index_shape % tetromino.size()]
 	
 	var next_rotation: Array[Vector2i] = get_next_rotation()
@@ -142,7 +75,7 @@ func rotate_custom():
 		#apply_positions()
 
 func get_next_rotation() -> Array[Vector2i]:
-	var tetromino = TETROMINO_SHAPES[current_tetromino_shape]["coords"]
+	var tetromino = TetrominoHelper.TETROMINO_SHAPES[current_tetromino_shape]["coords"]
 	current_index_shape += 1
 	var array_coords: Array = tetromino[current_index_shape % tetromino.size()]
 	var new_array_cords: Array[Vector2i] = []
@@ -166,10 +99,6 @@ func get_bounding_rect() -> Rect2:
 			rect = rect.merge(block_rect)
 	
 	return rect
-
-func get_random_tetromino() -> TetrominoType:
-	var values = TetrominoType.values()
-	return values[randi() % values.size()]
 
 func toggle_fire(activate: bool) -> void:
 	var lower_position: Array[SingleBlock] = get_bottom_blocks()
@@ -200,3 +129,12 @@ func get_bottom_blocks() -> Array[SingleBlock]:
 			all_bottom_blocks.push_back(single_block)
 	
 	return all_bottom_blocks
+
+func get_current_rows() -> Array[int]:
+	var all_rows: Array[int]
+
+	for child: SingleBlock in get_children():
+		if child.grid_coords.y not in all_rows:
+			all_rows.append(child.grid_coords.y)
+	
+	return all_rows

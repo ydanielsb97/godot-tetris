@@ -1,7 +1,9 @@
-res://scenes/blocks/fast_fall_fx.tscn::b75ef0a573faa59ff1fdb150a1d3e0f6::1748131885::res://.godot/exported/133200997/export-486573d4422b4d8bfd040c7ab82142c4-fast_fall_fx.scn
-res://scenes/blocks/single_block.tscn::796bbd3bd6d87cd3594259000df5669f::1748131885::res://.godot/exported/133200997/export-38073afd5103c5600c67c8c78d316012-single_block.scn
-res://scenes/blocks/tetromino.tscn::7450ce540a4a1c0e6cd21370f60443c2::1748027935::res://.godot/exported/133200997/export-1a84bf0c5b2a7cc428adf15941f0498e-tetromino.scn
+res://scenes/blocks/fast_fall_fx.tscn::b75ef0a573faa59ff1fdb150a1d3e0f6::1748186992::res://.godot/exported/133200997/export-486573d4422b4d8bfd040c7ab82142c4-fast_fall_fx.scn
+res://scenes/blocks/single_block.tscn::796bbd3bd6d87cd3594259000df5669f::1748186992::res://.godot/exported/133200997/export-38073afd5103c5600c67c8c78d316012-single_block.scn
+res://scenes/blocks/tetromino.tscn::7450ce540a4a1c0e6cd21370f60443c2::1748180570::res://.godot/exported/133200997/export-1a84bf0c5b2a7cc428adf15941f0498e-tetromino.scn
 res://scenes/blocks/TetrominoTEST.tscn::427187e8634eb9fb12191d2f354b390f::1748001402::res://.godot/exported/133200997/export-40a07fc41272301cd08df5248fca198f-TetrominoTEST.scn
 res://scenes/levels/level_1/border.tscn::206f8789f65c3be9293b6454252aa423::1747935888::res://.godot/exported/133200997/export-f799557756e51053b8db9d30dd86a613-border.scn
-res://scenes/levels/level_1/level_1.tscn::3224fde5b1f7f927bd01896bec1a91c1::1748131885::res://.godot/exported/133200997/export-09f66ca96b446d5b5f4c5fa462747d92-level_1.scn
-res://scenes/blocks/destroy_fx.tscn::674ec03f9fa0936f62ba5b1b4b7c3f09::1748131885::res://.godot/exported/133200997/export-01d587de8df67d3b2bd52c3e7aca31d2-destroy_fx.scn
+res://scenes/levels/level_1/level_1.tscn::bf8d5574c276fdd3618132e59adf1ad0::1748188568::res://.godot/exported/133200997/export-09f66ca96b446d5b5f4c5fa462747d92-level_1.scn
+res://scenes/blocks/destroy_fx.tscn::674ec03f9fa0936f62ba5b1b4b7c3f09::1748180745::res://.godot/exported/133200997/export-01d587de8df67d3b2bd52c3e7aca31d2-destroy_fx.scn
+res://scenes/game_ui/game_ui.tscn::26e3c8222d19da7cc65914036903e3b3::1748187001::res://.godot/exported/133200997/export-cd352c23c97564e05709ea2332d4db05-game_ui.scn
+res://default_bus_layout.tres::0f0d82c4da4b0ef2a3ecdb1ff8a7a2b4::1748188556::res://.godot/exported/133200997/export-19246414aa9fb561ced4b8dce477acec-default_bus_layout.res

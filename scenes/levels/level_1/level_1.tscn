@@ -46,7 +46,7 @@ color = Color(0.109804, 0.109804, 0.109804, 0.435294)
 [node name="GameUI" parent="Level" instance=ExtResource("3_5o1mp")]
 
 [node name="LogicalGrid" type="Node2D" parent="Level"]
-position = Vector2(426, 24)
+position = Vector2(362, 100)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
 stream = ExtResource("4_spwf2")

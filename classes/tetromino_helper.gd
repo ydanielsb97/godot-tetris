@@ -81,18 +81,5 @@ const TETROMINO_WEIGHTS := {
 const GRID_SIZE_Y: int = 4
 const GRID_SIZE_X: int = 4
 
-static var _weighted_pool: Array[TetrominoType] = _build_weighted_pool()
-
-
-static func _build_weighted_pool() -> Array:
-	var pool: Array[TetrominoType] = []
-	for type in TETROMINO_WEIGHTS.keys():
-		var weight = TETROMINO_WEIGHTS[type]
-		for i in range(weight):
-			pool.append(type)
-	return pool
-
 static func get_random_tetromino_shape() -> TetrominoHelper.TetrominoType:
-	#return _weighted_pool[randi() % _weighted_pool.size()]
-	return TetrominoType.I
-	
+	return TetrominoHelper.TetrominoType.values().pick_random()

@@ -4,6 +4,5 @@
 
 [node name="Border" type="Sprite2D"]
 texture = ExtResource("1_2eigf")
-offset = Vector2(150, 300)
 region_enabled = true
 region_rect = Rect2(31, 81, 338, 639)

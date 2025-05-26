@@ -46,7 +46,7 @@ func _input(event: InputEvent) -> void:
 		current_tetromino.move_left()
 	elif event.is_action_pressed("right"):
 		current_tetromino.move_right()
-	elif event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("instant_fall"):
 		activate_fastest_fall_speed()
 
 func activate_fastest_fall_speed() -> void:

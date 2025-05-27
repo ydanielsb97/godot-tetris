@@ -7,7 +7,7 @@ signal ready_to_add
 const CELL_SIZE: int = 30
 const GRID_MARGING: Vector2i = Vector2i(-15, -15)
 const GRID_COLUMNS: int = 10
-const GRID_ROWS: int = 20
+const GRID_ROWS: int = 22
 const TWEEN_SPEED_MOVEMENT: float = 0.0
 const TWEEN_SPEED_TO_DIRECTION: float = 0.0
 
@@ -89,17 +89,19 @@ func move_group_blocks_to_direction(from: Array[Vector2i], to: Vector2i, tween_t
 		
 		all_cells_to.append(cell_to)
 		
-	var tween = create_tween().set_parallel()
+	#var tween = create_tween().set_parallel()
 	
 	for index in range(len(all_cells_from)):
 		var cell = all_cells_from[index]
 		var cell_to = all_cells_to[index]
-		tween.tween_property(cell.block, "position", Vector2(cell_to.coords * CELL_SIZE - GRID_MARGING), tween_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		cell.block.position = Vector2(cell_to.coords * CELL_SIZE - GRID_MARGING)
+		cell.block.visible = cell_to.coords.y >= 2
+		#tween.tween_property(cell.block, "position", Vector2(cell_to.coords * CELL_SIZE - GRID_MARGING), tween_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 		
 		cell_to.set_block(cell.block)
 		cell.set_block(null)
 #
-	await tween.finished
+	#await tween.finished
 	
 	return true
 
@@ -142,6 +144,7 @@ func move_group_blocks(from: Array[Vector2i], to: Array[Vector2i]) -> bool:
 		var block = all_blocks_to_move[index]
 		var tween = create_tween()
 		tween.tween_property(block, "position", Vector2(cell_to.coords * CELL_SIZE - GRID_MARGING), TWEEN_SPEED_MOVEMENT)
+		block.visible = cell_to.coords.y >= 2
 		cell_to.set_block(block)
 	
 	for cell_from in all_cells_from:
@@ -231,12 +234,13 @@ func move_down_from_row(row_from: int) -> void:
 			if get_cell_by_coords(coords).block:
 				positions_from.append(Vector2i(x, current_row))
 	
-	var is_moved = await move_group_blocks_to_direction(positions_from, Vector2i.DOWN, 0.05)
+	if positions_from.is_empty(): return
+	var is_moved = await move_group_blocks_to_direction(positions_from, Vector2i.DOWN, 0.00)
 	
 	while is_moved:
 		for index in len(positions_from):
 			positions_from[index] += Vector2i.DOWN
-		is_moved = await move_group_blocks_to_direction(positions_from, Vector2i.DOWN, 0.05)
+		is_moved = await move_group_blocks_to_direction(positions_from, Vector2i.DOWN, 0.00)
 
 func get_cell_by_coords(coords: Vector2i) -> GridCell:
 	var found_index: int = get_cell_index_by_coords(coords)

@@ -2,7 +2,6 @@ extends Node2D
 
 class_name Tetromino
 
-
 const FAST_FALL_FX = preload("res://scenes/blocks/fast_fall_fx.tscn")
 const SINGLE_BLOCK = preload("res://scenes/blocks/single_block.tscn")
 
@@ -23,17 +22,33 @@ func setup(coords_grid: Vector2i, tetromino_shape: TetrominoHelper.TetrominoType
 	block_texture = tetromino["texture"]
 	var random_tetromino: Array = tetromino["coords"][current_index_shape]
 	
+	var positions: Array[Vector2i] = []
+	
 	for y in range(GRID_SIZE_Y):
 		for x in range(GRID_SIZE_X):
 			var pos = Vector2i(x, y)
 			if pos in random_tetromino:
-				add_block(pos, coords_grid)
+				positions.append(pos)
+				#add_block(pos, coords_grid)
+		
+	var final_positions: Array[Vector2i] = []
+	
+	for pos in len(positions):
+		if pos == 0:
+			final_positions.append(coords_grid)
+			continue
+		
+		var next_position_substract = positions[pos] - positions[pos - 1]
+		final_positions.append(final_positions[pos - 1] + next_position_substract)
 
-func add_block(pos: Vector2i, coords_grid: Vector2i) -> void:
+	for pos in final_positions:
+		add_block(pos)
+
+func add_block(pos: Vector2i) -> void:
 	var new_block: SingleBlock = SINGLE_BLOCK.instantiate()
 	add_child(new_block)
 	new_block.setup(block_texture)
-	GridManager.add_block(new_block, coords_grid + pos)
+	GridManager.add_block(new_block, pos)
 
 func move_down() -> void:
 	move(Vector2i.DOWN)
@@ -69,10 +84,6 @@ func rotate_custom():
 	
 	var changed = GridManager.move_group_blocks(all_coords, next_rotation)
 	if !changed: current_index_shape -= 1
-		
-	#if is_valid_position(next_rotation):
-		#relative_blocks = next_rotation.duplicate()
-		#apply_positions()
 
 func get_next_rotation() -> Array[Vector2i]:
 	var tetromino = TetrominoHelper.TETROMINO_SHAPES[current_tetromino_shape]["coords"]

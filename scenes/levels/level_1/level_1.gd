@@ -13,7 +13,7 @@ const GRID_HEIGHT = 20
 
 const DEGREES_ROTATION: float = 90.0
 const DEFAULT_FALLING_TIME: float = 1.0
-const START_TETROMINO_POSITION: Vector2i = Vector2i(3, 0)
+const START_TETROMINO_POSITION: Vector2i = Vector2i(3, 2)
 
 var current_tetromino: Tetromino
 var next_tetromino_shape: TetrominoHelper.TetrominoType

@@ -41,7 +41,7 @@ func register_clear(lines_cleared: int):
 	SignalHub.emit_score_update()
 
 func update_level() -> void:
-	var new_level = int(current_score.lines_cleared / 10)
+	var new_level = current_score.lines_cleared / 10
 	
 	if new_level > current_score.level:
 		current_score.level = new_level

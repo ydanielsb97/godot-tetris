@@ -72,6 +72,6 @@ const GRID_SIZE_Y: int = 4
 const GRID_SIZE_X: int = 4
 
 static func get_random_tetromino_shape() -> TetrominoHelper.TetrominoType:
-	return TetrominoHelper.TetrominoType.O
+	return TetrominoHelper.TetrominoType.I
 	#return TetrominoHelper.TetrominoType.values().pick_random()
 	

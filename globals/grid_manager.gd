@@ -176,7 +176,6 @@ func destroy_block(coords: Vector2i) -> void:
 	grid[cell_grid_index].destroy_block()
 
 func check_row_complete(rows_to_check: Array[int]) -> void:
-	var initial_value: Dictionary[int, int] = {}	
 	var rows_to_delete: Array[int] = []
 	
 	for row in rows_to_check:
@@ -187,11 +186,17 @@ func check_row_complete(rows_to_check: Array[int]) -> void:
 		if count == GRID_COLUMNS:
 			rows_to_delete.append(row)
 	
+	if len(rows_to_delete) <= 0:
+		ready_to_add.emit()
+		return
+	
 	var higher_animation_time: float = 0.0
 	
 	for row in rows_to_delete:
 		higher_animation_time = destroy_row(row)
-		
+	
+	ScoreManager.register_clear(len(rows_to_delete))
+	
 	await get_tree().create_timer(higher_animation_time / 2).timeout
 	
 	for row in rows_to_delete:

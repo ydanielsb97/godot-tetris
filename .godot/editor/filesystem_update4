@@ -1,8 +1,7 @@
 res://scenes/game_ui/game_ui.tscn
 res://globals/grid_manager.gd
-res://scenes/blocks/tetromino.gd
-res://classes/tetromino_helper.gd
-res://scenes/levels/level_1/level_1.tscn
-res://scenes/levels/level_1/border.tscn
 res://scenes/game_ui/white_title_32.tres
-res://scenes/levels/level_1/level_1.gd
+res://scenes/blocks/tetromino.gd
+res://scenes/game_ui/next_tetromino.gd
+res://default_bus_layout.tres
+res://classes/tetromino_helper.gd

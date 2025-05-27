@@ -21,7 +21,6 @@ var next_tetromino_shape: TetrominoHelper.TetrominoType
 var grid := []
 
 var fastest_fall_speed: bool = false
-var fast_fall_speed: bool = false
 var timer_wait_time: float = .5
 var game_over: bool = false
 
@@ -57,6 +56,7 @@ func activate_fastest_fall_speed() -> void:
 	timer.start()
 
 func _ready() -> void:
+	ScoreManager.start_score()
 	next_tetromino_shape = TetrominoHelper.get_random_tetromino_shape()
 	draw_random_block()
 
@@ -72,10 +72,10 @@ func on_has_landed() -> void:
 	timer.stop()
 	if fastest_fall_speed:
 		current_tetromino.toggle_fire(true)
-	GridManager.check_row_complete(current_tetromino.get_current_rows())
 	reset_tetromino()
 	timer_wait_time = DEFAULT_FALLING_TIME
 	timer.wait_time = timer_wait_time
+	GridManager.check_row_complete(current_tetromino.get_current_rows())
 
 func draw_random_block() -> void:
 	var new_tetromino = TETROMINO.instantiate()
@@ -87,7 +87,6 @@ func draw_random_block() -> void:
 
 func reset_tetromino() -> void:
 	fastest_fall_speed = false
-	current_tetromino = null
 
 func _on_timer_timeout() -> void:
 	if game_over or !current_tetromino: return

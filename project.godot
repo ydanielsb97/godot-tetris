@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GridManager="*res://globals/grid_manager.gd"
 SignalHub="*res://globals/signal_handler.gd"
+ScoreManager="*res://globals/score_manager.gd"
 
 [display]
 

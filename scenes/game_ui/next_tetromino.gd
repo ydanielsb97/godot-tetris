@@ -4,15 +4,25 @@ extends Node2D
 
 const SINGLE_BLOCK = preload("res://scenes/blocks/single_block.tscn")
 
+var tetromino_type: TetrominoHelper.TetrominoType
 var grid: Array[GridCell] = []
 const GRID_COLUMNS: int = 4
 const GRID_ROWS: int = 4
 const CELL_SIZE: int = 30
-const GRID_MARGIN: Vector2i = Vector2i(-30, 0)
-var grid_margin: Vector2i
+var blocks_offset: Vector2i
 
 const GRID_SIZE_Y: int = 4
 const GRID_SIZE_X: int = 4
+
+const tetromino_offset := {
+	TetrominoHelper.TetrominoType.I: Vector2i(30, -15),
+	TetrominoHelper.TetrominoType.O: Vector2i(30, 30),
+	TetrominoHelper.TetrominoType.T: Vector2i(15, 0),
+	TetrominoHelper.TetrominoType.L: Vector2i(15, 0),
+	TetrominoHelper.TetrominoType.J: Vector2i(15, 0),
+	TetrominoHelper.TetrominoType.S: Vector2i(15, 0),
+	TetrominoHelper.TetrominoType.Z: Vector2i(15, 0)
+}
 
 func _ready() -> void:
 	for x in range(GRID_COLUMNS):
@@ -28,7 +38,8 @@ func add_block_to_grid(block: SingleBlock, coords: Vector2i) -> void:
 	elif cell_grid.block != null: 
 		return
 	
-	block.position = Vector2((coords * CELL_SIZE) - grid_margin)
+	block.position = Vector2((coords * CELL_SIZE))
+	block.offset = tetromino_offset[tetromino_type]
 	cell_grid.set_block(block)
 
 func clear_cells() -> void:
@@ -42,11 +53,11 @@ func _enter_tree() -> void:
 
 func on_next_tetromino(tetromino_shape: TetrominoHelper.TetrominoType) -> void:
 	clear_cells()
-	setup(tetromino_shape)
+	tetromino_type = tetromino_shape
+	setup()
 
-func setup(tetromino_shape: TetrominoHelper.TetrominoType) -> void:
-	
-	var tetromino = TetrominoHelper.TETROMINO_SHAPES[tetromino_shape]
+func setup() -> void:
+	var tetromino = TetrominoHelper.TETROMINO_SHAPES[tetromino_type]
 	var first_coords: Array = tetromino["coords"][0]
 	
 	var positions: Array[Vector2i] = []
@@ -61,14 +72,12 @@ func setup(tetromino_shape: TetrominoHelper.TetrominoType) -> void:
 	
 	for pos in len(positions):
 		if pos == 0:
-			final_positions.append(Vector2i(0, 0))
+			final_positions.append(positions[0])
 			continue
 		
 		var next_position_substract = positions[pos] - positions[pos - 1]
 		final_positions.append(final_positions[pos - 1] + next_position_substract)
-	
-	grid_margin = calculate_margin_for_shape(final_positions)
-	
+		
 	for pos in final_positions:
 		add_block(pos, tetromino["texture"])
 
@@ -78,24 +87,6 @@ func add_block(pos: Vector2i, block_texture: CompressedTexture2D) -> void:
 	new_block.setup(block_texture)
 	add_block_to_grid(new_block, pos)
 
-func calculate_margin_for_shape(shape: Array) -> Vector2i:
-	
-	var higher_x: int = 0
-	var higher_y: int = 0
-	
-	for coord:Vector2i in shape:
-		higher_x = coord.x if coord.x > higher_x else higher_x
-		higher_y = coord.y if coord.y > higher_y else higher_y
-	
-	var empty_x: int = (higher_x + 1) - GRID_COLUMNS
-	var empty_y: int = (higher_y + 1) - GRID_ROWS
-	
-	var margin_x: int = empty_x * (CELL_SIZE / 2)
-	var margin_y: int = empty_y * (CELL_SIZE / 2)
-	
-	return GRID_MARGIN + Vector2i(margin_x, margin_y)
-
-	
 func get_cell_by_coords(coords: Vector2i) -> GridCell:
 	var found_index: int = get_cell_index_by_coords(coords)
 	

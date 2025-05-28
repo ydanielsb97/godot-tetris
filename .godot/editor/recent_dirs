@@ -1,6 +1,7 @@
-res://scenes/game_ui
-res://globals
 C:/Users/ydani/OneDrive/Documentos/TetrisRecreation
+F:/Games/Godot/Tetris
+res://globals
+res://scenes/game_ui
 res://scenes/blocks
 res://scenes/levels
 res://assets/images

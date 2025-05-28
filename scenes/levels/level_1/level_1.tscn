@@ -9,6 +9,7 @@
 script = ExtResource("1_5o1mp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 
 [node name="BackgroundPattern" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -46,10 +47,11 @@ color = Color(0.109804, 0.109804, 0.109804, 0.435294)
 [node name="GameUI" parent="Level" instance=ExtResource("3_5o1mp")]
 
 [node name="LogicalGrid" type="Node2D" parent="Level"]
-position = Vector2(362, 42)
+position = Vector2(426, 42)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
 stream = ExtResource("4_spwf2")
 autoplay = true
+bus = &"Music"
 
 [connection signal="timeout" from="Level/Timer" to="." method="_on_timer_timeout"]

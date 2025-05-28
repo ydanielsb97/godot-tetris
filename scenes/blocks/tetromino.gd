@@ -33,6 +33,12 @@ func setup(coords_grid: Vector2i, tetromino_shape: TetrominoHelper.TetrominoType
 		
 	var final_positions: Array[Vector2i] = []
 	
+	if current_tetromino_shape == TetrominoHelper.TetrominoType.I:
+		coords_grid -= Vector2i(1,0)
+		
+	if current_tetromino_shape == TetrominoHelper.TetrominoType.S:
+		coords_grid += Vector2i(1,0)
+		
 	for pos in len(positions):
 		if pos == 0:
 			final_positions.append(coords_grid)

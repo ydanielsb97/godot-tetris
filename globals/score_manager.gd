@@ -3,7 +3,6 @@ extends Node
 var high_score: HighScoreResource
 var current_score: HighScoreResource
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	high_score = HighScoreResource.load_high_score()
 
@@ -18,15 +17,19 @@ func register_clear(lines_cleared: int):
 		1: 
 			points = 40
 			current_score.lines_simultaneously["single"] += 1
+			SfxManager.play_sfx(SfxManager.SFX.SINGLE)
 		2: 
 			points = 100
 			current_score.lines_simultaneously["double"] += 1
+			SfxManager.play_sfx(SfxManager.SFX.DOUBLE)
 		3: 
 			points = 300
 			current_score.lines_simultaneously["triple"] += 1
+			SfxManager.play_sfx(SfxManager.SFX.TRIPLE)
 		4: 
 			points = 1200
 			current_score.lines_simultaneously["tetris"] += 1
+			SfxManager.play_sfx(SfxManager.SFX.TETRIS)
 	
 	current_score.score += points * (current_score.level + 1)
 	current_score.lines_cleared += lines_cleared

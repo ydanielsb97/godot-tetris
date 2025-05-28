@@ -44,7 +44,7 @@ size_flags_vertical = 6
 script = ExtResource("1_8qcbp")
 
 [node name="RightTop" type="Node2D" parent="."]
-position = Vector2(711, 5)
+position = Vector2(774, 5)
 
 [node name="Score" type="Node2D" parent="RightTop"]
 
@@ -111,7 +111,7 @@ text = "000000"
 label_settings = SubResource("LabelSettings_8qcbp")
 
 [node name="LeftTop" type="Node2D" parent="."]
-position = Vector2(197, 5)
+position = Vector2(260, 5)
 
 [node name="Controls" type="Node2D" parent="LeftTop"]
 
@@ -169,7 +169,7 @@ INSTANT: CTRL"
 label_settings = ExtResource("5_t24f4")
 
 [node name="Center" type="Node2D" parent="."]
-position = Vector2(512, 400)
+position = Vector2(575, 400)
 
 [node name="Grid" type="Sprite2D" parent="Center"]
 texture = ExtResource("3_najyh")
@@ -201,7 +201,7 @@ patch_margin_right = 15
 patch_margin_bottom = 15
 
 [node name="RightBottom" type="Node2D" parent="."]
-position = Vector2(680, 237)
+position = Vector2(743, 237)
 
 [node name="NextTetromino" type="Node2D" parent="RightBottom"]
 script = ExtResource("4_hk0ve")
@@ -238,7 +238,7 @@ color = Color(0, 0, 0, 0.533333)
 position = Vector2(14, 14)
 
 [node name="LeftBottom" type="Node2D" parent="."]
-position = Vector2(166, 266)
+position = Vector2(229, 266)
 
 [node name="Level" type="Node2D" parent="LeftBottom"]
 
@@ -287,7 +287,7 @@ text = "00"
 label_settings = ExtResource("5_t24f4")
 
 [node name="Top" type="Node2D" parent="."]
-position = Vector2(351, 5)
+position = Vector2(414, 5)
 
 [node name="Score" type="Node2D" parent="Top"]
 

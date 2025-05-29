@@ -1,6 +1,10 @@
 # 🎮 Godot Tetris Clone
 
+Play: https://ys97.itch.io/tetrisrecreation
+
 A clean and responsive Tetris clone built with **Godot Engine**, featuring the 7 classic Tetromino shapes and colorful pixel art blocks.
+
+![Tetris](https://github.com/user-attachments/assets/55965e1d-3664-4113-990f-51cce7c0198b)
 
 ---
 
@@ -27,12 +31,3 @@ You can find the asset pack here:
 ## 📦 Requirements to Develop
 
 - [Godot Engine 4.x](https://godotengine.org/download)
-
----
-
-## 🛠️ How to Play
-
-**Coming soon...**  
-The project is still under development and polishing. Instructions for building and running the game will be added here shortly.
-
----

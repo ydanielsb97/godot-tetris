@@ -2,12 +2,14 @@ extends Node
 
 var high_score: HighScoreResource
 var current_score: HighScoreResource
+var is_high_score: bool = false
 
 func _ready() -> void:
 	high_score = HighScoreResource.load_high_score()
 
 func start_score() -> void:
 	current_score = HighScoreResource.new()
+	is_high_score = false
 	SignalHub.emit_score_update()
 	
 func register_clear(lines_cleared: int):
@@ -36,7 +38,7 @@ func register_clear(lines_cleared: int):
 	
 	update_level()
 	
-	var is_high_score: bool = current_score.save_score(high_score)
+	is_high_score = current_score.save_score(high_score)
 	
 	if is_high_score:
 		high_score = current_score

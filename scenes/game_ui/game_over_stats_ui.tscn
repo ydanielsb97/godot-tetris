@@ -1,0 +1,261 @@
+[gd_scene load_steps=11 format=3 uid="uid://c1j3trw2gbplp"]
+
+[ext_resource type="Script" uid="uid://dfgvtgb1igyq8" path="res://scenes/game_ui/game_over_stats_ui.gd" id="1_ir78p"]
+[ext_resource type="LabelSettings" uid="uid://drlsymnisapk1" path="res://scenes/game_ui/white_title_32.tres" id="1_lqi1b"]
+[ext_resource type="LabelSettings" uid="uid://bjrfmdvolxrf6" path="res://scenes/game_ui/white_title_24.tres" id="2_ir78p"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_31rk5"]
+color = Color(1, 1, 1, 1)
+thickness = 2
+
+[sub_resource type="Animation" id="Animation_ir78p"]
+resource_name = "flash"
+length = 0.7
+loop_mode = 1
+step = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/HBoxContainer/HighScoreLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vdrt7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/HBoxContainer/HighScoreLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7hmkl"]
+_data = {
+&"RESET": SubResource("Animation_vdrt7"),
+&"flash": SubResource("Animation_ir78p")
+}
+
+[sub_resource type="Animation" id="Animation_7hmkl"]
+resource_name = "press_start_flash"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/HBoxContainer/PressStartLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6u2cd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/HBoxContainer/PressStartLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_po5l1"]
+_data = {
+&"RESET": SubResource("Animation_6u2cd"),
+&"press_start_flash": SubResource("Animation_7hmkl")
+}
+
+[node name="GameOverStatsContainer" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+script = ExtResource("1_ir78p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "STATS"
+label_settings = ExtResource("1_lqi1b")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_31rk5")
+
+[node name="ScoreContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SCORE:"
+label_settings = ExtResource("2_ir78p")
+vertical_alignment = 1
+
+[node name="ScoreValueLabel" type="Label" parent="VBoxContainer/ScoreContainer"]
+layout_mode = 2
+text = "000000"
+label_settings = ExtResource("2_ir78p")
+horizontal_alignment = 1
+
+[node name="LinesClearedContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LinesLabel" type="Label" parent="VBoxContainer/LinesClearedContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LINES CLEARED:"
+label_settings = ExtResource("2_ir78p")
+vertical_alignment = 1
+
+[node name="LinesValueLabel" type="Label" parent="VBoxContainer/LinesClearedContainer"]
+layout_mode = 2
+text = "000"
+label_settings = ExtResource("2_ir78p")
+horizontal_alignment = 1
+
+[node name="LevelContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="VBoxContainer/LevelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LEVEL:"
+label_settings = ExtResource("2_ir78p")
+vertical_alignment = 1
+
+[node name="LevelValueLabel" type="Label" parent="VBoxContainer/LevelContainer"]
+layout_mode = 2
+text = "00"
+label_settings = ExtResource("2_ir78p")
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+theme_override_styles/separator = SubResource("StyleBoxLine_31rk5")
+
+[node name="SingleContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SingleLabel" type="Label" parent="VBoxContainer/SingleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SINGLE:"
+label_settings = ExtResource("2_ir78p")
+vertical_alignment = 1
+
+[node name="SingleValueLabel" type="Label" parent="VBoxContainer/SingleContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "000"
+label_settings = ExtResource("2_ir78p")
+
+[node name="DoubleContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DoubleLabel" type="Label" parent="VBoxContainer/DoubleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DOUBLE:"
+label_settings = ExtResource("2_ir78p")
+vertical_alignment = 1
+
+[node name="DoubleValueLabel" type="Label" parent="VBoxContainer/DoubleContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "000"
+label_settings = ExtResource("2_ir78p")
+
+[node name="TripleContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TripleLabel" type="Label" parent="VBoxContainer/TripleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TRIPLE:"
+label_settings = ExtResource("2_ir78p")
+vertical_alignment = 1
+
+[node name="TripleValueLabel" type="Label" parent="VBoxContainer/TripleContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "000"
+label_settings = ExtResource("2_ir78p")
+
+[node name="TetrisContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TetrisLabel" type="Label" parent="VBoxContainer/TetrisContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TETRIS:"
+label_settings = ExtResource("2_ir78p")
+vertical_alignment = 1
+
+[node name="TetrisValueLabel" type="Label" parent="VBoxContainer/TetrisContainer"]
+layout_mode = 2
+text = "000"
+label_settings = ExtResource("2_ir78p")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="HighScoreLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+text = "NEW HIGH SCORE"
+label_settings = ExtResource("1_lqi1b")
+
+[node name="PressStartLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 4
+text = "PRESS ENTER"
+label_settings = ExtResource("2_ir78p")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7hmkl")
+}
+autoplay = "flash"
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_po5l1")
+}
+autoplay = "press_start_flash"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://h32gkmdjlcyj"]
+[gd_scene load_steps=15 format=3 uid="uid://h32gkmdjlcyj"]
 
 [ext_resource type="Script" uid="uid://db0arifw57h1v" path="res://scenes/game_ui/game_ui.gd" id="1_8qcbp"]
 [ext_resource type="Texture2D" uid="uid://dla07ym306ib" path="res://assets/images/Border.png" id="2_1i64n"]
@@ -8,8 +8,23 @@
 [ext_resource type="Script" uid="uid://l3bwpe43ph1m" path="res://scenes/game_ui/next_tetromino.gd" id="4_hk0ve"]
 [ext_resource type="LabelSettings" uid="uid://bjrfmdvolxrf6" path="res://scenes/game_ui/white_title_24.tres" id="5_t24f4"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_t24f4"]
+atlas = ExtResource("3_najyh")
+region = Rect2(50, 100, 150, 240)
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1i64n"]
 load_path = "res://.godot/imported/Background.png-5d8bd16cba4ceaf0e8a84382138da42f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ovbv"]
+atlas = ExtResource("3_najyh")
+region = Rect2(50, 100, 300, 41)
+
+[sub_resource type="Theme" id="Theme_mgxhm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e13be"]
+atlas = ExtResource("3_najyh")
+region = Rect2(50, 100, 300, 600)
+filter_clip = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_hk0ve"]
 font = ExtResource("4_2cwxn")
@@ -29,9 +44,6 @@ shadow_size = 2
 shadow_color = Color(0, 0, 0, 0.796078)
 shadow_offset = Vector2(-2, 2)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_najyh"]
-load_path = "res://.godot/imported/Background.png-5d8bd16cba4ceaf0e8a84382138da42f.ctex"
-
 [node name="GameUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -43,33 +55,32 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 script = ExtResource("1_8qcbp")
 
-[node name="RightTop" type="Node2D" parent="."]
-position = Vector2(774, 5)
-
-[node name="Score" type="Node2D" parent="RightTop"]
-
-[node name="Background" type="Sprite2D" parent="RightTop/Score"]
-position = Vector2(58, 114)
-texture = SubResource("CompressedTexture2D_1i64n")
-region_enabled = true
-region_rect = Rect2(95, 100, 150, 201)
-
-[node name="ColorRect" type="ColorRect" parent="RightTop/Score/Background"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -75.0
-offset_top = -100.5
-offset_right = -75.0
-offset_bottom = -100.5
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -351.5
+offset_right = 244.0
+offset_bottom = 351.5
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.533333)
 
-[node name="NinePatchRect" type="NinePatchRect" parent="RightTop/Score"]
-offset_left = -31.0
-offset_right = 148.0
-offset_bottom = 229.0
+[node name="LeftContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Left" type="VBoxContainer" parent="HBoxContainer/LeftContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+
+[node name="LeftTop" type="NinePatchRect" parent="HBoxContainer/LeftContainer/Left"]
+custom_minimum_size = Vector2(180, 270)
+layout_mode = 2
+size_flags_horizontal = 3
 texture = ExtResource("2_1i64n")
 region_rect = Rect2(36, 86, 329, 628)
 patch_margin_left = 15
@@ -77,89 +88,43 @@ patch_margin_top = 15
 patch_margin_right = 15
 patch_margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RightTop/Score"]
-offset_top = 15.0
-offset_right = 121.0
-offset_bottom = 204.0
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/LeftContainer/Left/LeftTop"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -120.0
+offset_right = 75.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Control2" type="VBoxContainer" parent="RightTop/Score/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+texture = SubResource("AtlasTexture_t24f4")
 
-[node name="TopLabel" type="Label" parent="RightTop/Score/VBoxContainer/Control2"]
-layout_mode = 2
-text = "TOP"
-label_settings = ExtResource("2_2cwxn")
-
-[node name="TopValueLabel" type="Label" parent="RightTop/Score/VBoxContainer/Control2"]
-layout_mode = 2
-text = "000000"
-label_settings = SubResource("LabelSettings_hk0ve")
-
-[node name="Control" type="VBoxContainer" parent="RightTop/Score/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="ScoreLabel" type="Label" parent="RightTop/Score/VBoxContainer/Control"]
-layout_mode = 2
-text = "SCORE"
-label_settings = ExtResource("2_2cwxn")
-
-[node name="ScoreValueLabel" type="Label" parent="RightTop/Score/VBoxContainer/Control"]
-layout_mode = 2
-text = "000000"
-label_settings = SubResource("LabelSettings_8qcbp")
-
-[node name="LeftTop" type="Node2D" parent="."]
-position = Vector2(260, 5)
-
-[node name="Controls" type="Node2D" parent="LeftTop"]
-
-[node name="Background" type="Sprite2D" parent="LeftTop/Controls"]
-position = Vector2(58, 129)
-texture = SubResource("CompressedTexture2D_1i64n")
-region_enabled = true
-region_rect = Rect2(95, 100, 150, 230)
-
-[node name="ColorRect" type="ColorRect" parent="LeftTop/Controls/Background"]
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/TextureRect"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -75.0
-offset_top = -115.0
-offset_right = -75.0
-offset_bottom = -115.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.533333)
 
-[node name="NinePatchRect" type="NinePatchRect" parent="LeftTop/Controls"]
-offset_left = -31.0
-offset_right = 148.0
-offset_bottom = 258.0
-texture = ExtResource("2_1i64n")
-region_rect = Rect2(36, 86, 329, 628)
-patch_margin_left = 15
-patch_margin_top = 15
-patch_margin_right = 15
-patch_margin_bottom = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LeftTop/Controls"]
-offset_left = -6.0
-offset_top = 15.0
-offset_right = 125.0
-offset_bottom = 234.0
-
-[node name="ControlContainer" type="VBoxContainer" parent="LeftTop/Controls/VBoxContainer"]
+[node name="ControlContainer" type="VBoxContainer" parent="HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ControlsLabel" type="Label" parent="LeftTop/Controls/VBoxContainer/ControlContainer"]
+[node name="ControlsLabel" type="Label" parent="HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/ControlContainer"]
 layout_mode = 2
 text = "KEYS"
 label_settings = ExtResource("2_2cwxn")
 
-[node name="TopValueLabel" type="Label" parent="LeftTop/Controls/VBoxContainer/ControlContainer"]
+[node name="ControlsValuesLabel" type="Label" parent="HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/ControlContainer"]
 layout_mode = 2
 text = "LEFT: ←
 RIGHT: →
@@ -168,45 +133,15 @@ FAST: ↓
 INSTANT: CTRL"
 label_settings = ExtResource("5_t24f4")
 
-[node name="Center" type="Node2D" parent="."]
-position = Vector2(575, 400)
+[node name="LeftBottom" type="Control" parent="HBoxContainer/LeftContainer/Left"]
+layout_mode = 2
+size_flags_vertical = 0
 
-[node name="Grid" type="Sprite2D" parent="Center"]
-texture = ExtResource("3_najyh")
-region_enabled = true
-region_rect = Rect2(50, 100, 300, 600)
+[node name="Level" type="Control" parent="HBoxContainer/LeftContainer/Left/LeftBottom"]
+anchors_preset = 0
 
-[node name="ColorRect" type="ColorRect" parent="Center/Grid"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -300.0
-offset_right = -150.0
-offset_bottom = -300.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.533333)
-
-[node name="NinePatchRect" type="NinePatchRect" parent="Center"]
-offset_left = -164.0
-offset_top = -312.0
-offset_right = 165.0
-offset_bottom = 316.0
-texture = ExtResource("2_1i64n")
-region_rect = Rect2(36, 86, 329, 628)
-patch_margin_left = 15
-patch_margin_top = 15
-patch_margin_right = 15
-patch_margin_bottom = 15
-
-[node name="RightBottom" type="Node2D" parent="."]
-position = Vector2(743, 237)
-
-[node name="NextTetromino" type="Node2D" parent="RightBottom"]
-script = ExtResource("4_hk0ve")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="RightBottom/NextTetromino"]
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/LeftContainer/Left/LeftBottom/Level"]
+layout_mode = 0
 offset_right = 179.0
 offset_bottom = 118.0
 texture = ExtResource("2_1i64n")
@@ -216,13 +151,13 @@ patch_margin_top = 15
 patch_margin_right = 15
 patch_margin_bottom = 15
 
-[node name="Background" type="Sprite2D" parent="RightBottom/NextTetromino"]
+[node name="Background" type="Sprite2D" parent="HBoxContainer/LeftContainer/Left/LeftBottom/Level"]
 position = Vector2(89, 59)
 texture = SubResource("CompressedTexture2D_1i64n")
 region_enabled = true
 region_rect = Rect2(95, 145, 150, 90)
 
-[node name="ColorRect" type="ColorRect" parent="RightBottom/NextTetromino/Background"]
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/LeftContainer/Left/LeftBottom/Level/Background"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -234,87 +169,37 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.533333)
 
-[node name="LogicalGrid" type="Node2D" parent="RightBottom/NextTetromino"]
-position = Vector2(14, 14)
-
-[node name="LeftBottom" type="Node2D" parent="."]
-position = Vector2(229, 266)
-
-[node name="Level" type="Node2D" parent="LeftBottom"]
-
-[node name="NinePatchRect" type="NinePatchRect" parent="LeftBottom/Level"]
-offset_right = 179.0
-offset_bottom = 118.0
-texture = ExtResource("2_1i64n")
-region_rect = Rect2(36, 86, 329, 628)
-patch_margin_left = 15
-patch_margin_top = 15
-patch_margin_right = 15
-patch_margin_bottom = 15
-
-[node name="Background" type="Sprite2D" parent="LeftBottom/Level"]
-position = Vector2(89, 59)
-texture = SubResource("CompressedTexture2D_1i64n")
-region_enabled = true
-region_rect = Rect2(95, 145, 150, 90)
-
-[node name="ColorRect" type="ColorRect" parent="LeftBottom/Level/Background"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -75.0
-offset_top = -45.0
-offset_right = -75.0
-offset_bottom = -45.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.533333)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LeftBottom/Level"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/LeftContainer/Left/LeftBottom/Level"]
+layout_mode = 0
 offset_left = 25.0
 offset_top = 16.0
 offset_right = 156.0
 offset_bottom = 91.0
 
-[node name="LevelLabel" type="Label" parent="LeftBottom/Level/VBoxContainer"]
+[node name="LevelLabel" type="Label" parent="HBoxContainer/LeftContainer/Left/LeftBottom/Level/VBoxContainer"]
 layout_mode = 2
 text = "LEVEL"
 label_settings = ExtResource("2_2cwxn")
 
-[node name="LevelValueLabel" type="Label" parent="LeftBottom/Level/VBoxContainer"]
+[node name="LevelValueLabel" type="Label" parent="HBoxContainer/LeftContainer/Left/LeftBottom/Level/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "00"
 label_settings = ExtResource("5_t24f4")
 
-[node name="Top" type="Node2D" parent="."]
-position = Vector2(414, 5)
+[node name="CenterContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
 
-[node name="Score" type="Node2D" parent="Top"]
-
-[node name="Background" type="Sprite2D" parent="Top/Score"]
-position = Vector2(161, 39)
-texture = SubResource("CompressedTexture2D_najyh")
-region_enabled = true
-region_rect = Rect2(50, 150, 300, 50)
-
-[node name="ColorRect" type="ColorRect" parent="Top/Score/Background"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -25.0
-offset_right = -150.0
-offset_bottom = -25.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Center" type="VBoxContainer" parent="HBoxContainer/CenterContainer"]
+layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color(0, 0, 0, 0.533333)
+alignment = 1
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Top/Score"]
-offset_left = -3.0
-offset_right = 326.0
-offset_bottom = 78.0
+[node name="LinesCount" type="NinePatchRect" parent="HBoxContainer/CenterContainer/Center"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("2_1i64n")
 region_rect = Rect2(35, 86, 330, 628)
 patch_margin_left = 15
@@ -322,12 +207,213 @@ patch_margin_top = 15
 patch_margin_right = 15
 patch_margin_bottom = 15
 
-[node name="LinesLabel" type="Label" parent="Top/Score"]
-offset_left = 50.0
-offset_top = 11.0
-offset_right = 271.0
-offset_bottom = 64.0
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/CenterContainer/Center/LinesCount"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -30.0
+offset_right = 150.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CenterContainer/Center/LinesCount/CenterContainer"]
+z_index = -1
+layout_mode = 2
+texture = SubResource("AtlasTexture_8ovbv")
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/CenterContainer/Center/LinesCount/CenterContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.533333)
+
+[node name="LinesLabel" type="Label" parent="HBoxContainer/CenterContainer/Center/LinesCount/CenterContainer/TextureRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -22.0
+offset_right = 92.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "LINES - 000"
 label_settings = ExtResource("2_2cwxn")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MainGrid" type="NinePatchRect" parent="HBoxContainer/CenterContainer/Center"]
+clip_contents = true
+custom_minimum_size = Vector2(330, 629)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = SubResource("Theme_mgxhm")
+texture = ExtResource("2_1i64n")
+region_rect = Rect2(35, 86, 330, 630)
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/CenterContainer/Center/MainGrid"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer"]
+z_index = -1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_e13be")
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.533333)
+
+[node name="RightContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Right" type="VBoxContainer" parent="HBoxContainer/RightContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RightTop" type="NinePatchRect" parent="HBoxContainer/RightContainer/Right"]
+custom_minimum_size = Vector2(180, 270)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_1i64n")
+region_rect = Rect2(36, 86, 329, 628)
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/RightContainer/Right/RightTop"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -120.0
+offset_right = 75.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_t24f4")
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.513726)
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/MarginContainer"]
+custom_minimum_size = Vector2(150, 240)
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Control2" type="VBoxContainer" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TopLabel" type="Label" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/MarginContainer/VBoxContainer/Control2"]
+layout_mode = 2
+text = "TOP"
+label_settings = ExtResource("2_2cwxn")
+
+[node name="TopValueLabel" type="Label" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/MarginContainer/VBoxContainer/Control2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "000000"
+label_settings = SubResource("LabelSettings_hk0ve")
+
+[node name="Control" type="VBoxContainer" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="ScoreLabel" type="Label" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/MarginContainer/VBoxContainer/Control"]
+layout_mode = 2
+text = "SCORE"
+label_settings = ExtResource("2_2cwxn")
+
+[node name="ScoreValueLabel" type="Label" parent="HBoxContainer/RightContainer/Right/RightTop/CenterContainer/MarginContainer/VBoxContainer/Control"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "000000"
+label_settings = SubResource("LabelSettings_8qcbp")
+
+[node name="RightBottom" type="Control" parent="HBoxContainer/RightContainer/Right"]
+layout_mode = 2
+
+[node name="NextTetromino" type="Node2D" parent="HBoxContainer/RightContainer/Right/RightBottom"]
+script = ExtResource("4_hk0ve")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/RightContainer/Right/RightBottom/NextTetromino"]
+offset_right = 179.0
+offset_bottom = 118.0
+texture = ExtResource("2_1i64n")
+region_rect = Rect2(36, 86, 329, 628)
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15
+
+[node name="Background" type="Sprite2D" parent="HBoxContainer/RightContainer/Right/RightBottom/NextTetromino"]
+position = Vector2(89, 59)
+texture = SubResource("CompressedTexture2D_1i64n")
+region_enabled = true
+region_rect = Rect2(95, 145, 150, 90)
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/RightContainer/Right/RightBottom/NextTetromino/Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -45.0
+offset_right = -75.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.533333)
+
+[node name="LogicalGrid" type="Node2D" parent="HBoxContainer/RightContainer/Right/RightBottom/NextTetromino"]
+position = Vector2(14, 14)

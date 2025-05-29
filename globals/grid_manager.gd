@@ -1,8 +1,6 @@
 extends Node
 
-signal has_landed
-signal game_over
-signal ready_to_add
+
 
 const CELL_SIZE: int = 30
 const GRID_MARGING: Vector2i = Vector2i(-15, -15)
@@ -20,12 +18,17 @@ func _ready() -> void:
 			new_cell.set_coords(Vector2(x, y))
 			grid.append(new_cell)
 
+func clear_grid() -> void:
+	for cell in grid:
+		if cell.block: cell.block.queue_free()
+		cell.set_block(null)
+
 func add_block(block: SingleBlock, coords: Vector2i) -> void:
 	var cell_grid = get_cell_by_coords(coords)
 	
 	if !cell_grid: return
 	elif cell_grid.block != null: 
-		game_over.emit()
+		SignalHub.emit_game_over()
 		return
 	
 	block.position = Vector2(coords * CELL_SIZE - GRID_MARGING)
@@ -34,7 +37,7 @@ func add_block(block: SingleBlock, coords: Vector2i) -> void:
 	# Check landed on addition
 	var cell_to = get_cell_by_coords(cell_grid.coords + Vector2i.DOWN)
 	if cell_to and cell_to.block:
-		has_landed.emit()
+		SignalHub.emit_has_landed()
 
 func check_cell_is_empty(coords: Vector2i) -> bool:
 	var cell_grid = get_cell_by_coords(coords)
@@ -190,7 +193,7 @@ func check_row_complete(rows_to_check: Array[int]) -> void:
 			rows_to_delete.append(row)
 	
 	if len(rows_to_delete) <= 0:
-		ready_to_add.emit()
+		SignalHub.emit_ready_to_add_block()
 		return
 	
 	var higher_animation_time: float = 0.0
@@ -205,13 +208,13 @@ func check_row_complete(rows_to_check: Array[int]) -> void:
 	for row in rows_to_delete:
 		await move_down_from_row(row)
 
-	ready_to_add.emit()
+	SignalHub.emit_ready_to_add_block()
 
 func check_game_over() -> bool:
 	for x in range(GRID_COLUMNS):
 		var cell = get_cell_by_coords(Vector2i(x, 0))
 		if cell.block: 
-			game_over.emit()
+			SignalHub.emit_game_over()
 			return true
 	return false
 

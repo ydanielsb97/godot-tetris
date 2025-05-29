@@ -21,12 +21,16 @@ GridManager="*res://globals/grid_manager.gd"
 SignalHub="*res://globals/signal_handler.gd"
 ScoreManager="*res://globals/score_manager.gd"
 SfxManager="*res://globals/sfx_manager.gd"
+GameManager="*res://globals/game_manager.gd"
 
 [display]
 
 window/size/viewport_width=1150
 window/size/viewport_height=720
-window/stretch/mode="canvas_items"
+window/size/initial_position_type=3
+window/size/resizable=false
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [file_customization]
 

@@ -3,4 +3,8 @@ res://globals/grid_manager.gd
 res://scenes/blocks/tetromino.gd
 res://scenes/game_ui/white_title_32.tres
 res://scenes/game_ui/white_title_24.tres
-res://scenes/game_ui/game_ui.tscn
+res://scenes/levels/level_1/level_1.gd
+res://scenes/game_ui/game_over_stats_ui.tscn
+res://scenes/game_ui/game_over_stats_ui.gd
+res://globals/score_manager.gd
+res://default_bus_layout.tres

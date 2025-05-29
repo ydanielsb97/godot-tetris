@@ -59,21 +59,21 @@ func add_block(pos: Vector2i) -> void:
 func move_down() -> void:
 	move(Vector2i.DOWN)
 	
-func move_left() -> void:
-	move(Vector2i.LEFT)
+func move_left() -> bool:
+	return move(Vector2i.LEFT)
 
-func move_right() -> void:
-	move(Vector2i.RIGHT)
+func move_right() -> bool:
+	return move(Vector2i.RIGHT)
 
-func move(target_direction: Vector2i) -> void:
+func move(target_direction: Vector2i) -> bool:
 	var all_coords: Array[Vector2i]
 
 	for child: SingleBlock in get_children():
 		all_coords.append(child.grid_coords)
 	
-	GridManager.move_group_blocks_to_direction(all_coords, target_direction)
+	return GridManager.move_group_blocks_to_direction(all_coords, target_direction)
 
-func rotate_custom():	
+func rotate_custom() -> bool:	
 	var all_coords: Array[Vector2i]
 
 	for child: SingleBlock in get_children():
@@ -90,6 +90,7 @@ func rotate_custom():
 	
 	var changed = GridManager.move_group_blocks(all_coords, next_rotation)
 	if !changed: current_index_shape -= 1
+	return changed
 
 func get_next_rotation() -> Array[Vector2i]:
 	var tetromino = TetrominoHelper.TETROMINO_SHAPES[current_tetromino_shape]["coords"]

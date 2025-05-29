@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://q4dueil0bf31"]
+
+[ext_resource type="Texture2D" uid="uid://dla07ym306ib" path="res://assets/images/Border.png" id="1_hnqff"]
+[ext_resource type="Texture2D" uid="uid://ddbwsg68tqxo0" path="res://assets/images/Background.png" id="2_2r8od"]
+
+[sub_resource type="Theme" id="Theme_mgxhm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e13be"]
+atlas = ExtResource("2_2r8od")
+region = Rect2(50, 100, 300, 600)
+filter_clip = true
+
+[node name="NinePatchRect" type="NinePatchRect"]
+clip_contents = true
+custom_minimum_size = Vector2(330, 629)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -314.5
+offset_right = 165.0
+offset_bottom = 314.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_mgxhm")
+texture = ExtResource("1_hnqff")
+region_rect = Rect2(35, 86, 330, 630)
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+z_index = -1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_e13be")
+
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/TextureRect"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.533333)

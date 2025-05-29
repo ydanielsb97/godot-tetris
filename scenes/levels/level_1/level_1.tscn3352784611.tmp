@@ -1,30 +1,19 @@
-[gd_scene load_steps=23 format=3 uid="uid://dcaugkfbvcxcw"]
+[gd_scene load_steps=18 format=3 uid="uid://dcaugkfbvcxcw"]
 
 [ext_resource type="Script" uid="uid://br3dn6u4iug0o" path="res://scenes/levels/level_1/level_1.gd" id="1_5o1mp"]
 [ext_resource type="Texture2D" uid="uid://dxoeew6poflmg" path="res://assets/images/Pattern03.png" id="2_spwf2"]
 [ext_resource type="Script" uid="uid://db0arifw57h1v" path="res://scenes/game_ui/game_ui.gd" id="3_31rk5"]
-[ext_resource type="AudioStream" uid="uid://d2l05cba8w2e8" path="res://assets/audios/tetris.mp3" id="4_spwf2"]
+[ext_resource type="AudioStream" uid="uid://bvnh2t2shs80w" path="res://assets/audios/tetris.mp3" id="4_spwf2"]
 [ext_resource type="Texture2D" uid="uid://dla07ym306ib" path="res://assets/images/Border.png" id="4_w3g2g"]
 [ext_resource type="Texture2D" uid="uid://ddbwsg68tqxo0" path="res://assets/images/Background.png" id="5_napug"]
 [ext_resource type="LabelSettings" uid="uid://drlsymnisapk1" path="res://scenes/game_ui/white_title_32.tres" id="6_1jeig"]
 [ext_resource type="LabelSettings" uid="uid://bjrfmdvolxrf6" path="res://scenes/game_ui/white_title_24.tres" id="7_hhmec"]
-[ext_resource type="PackedScene" uid="uid://c1j3trw2gbplp" path="res://scenes/game_ui/game_over_stats_ui.tscn" id="8_w3g2g"]
 [ext_resource type="FontFile" uid="uid://cd2gu28abu5ll" path="res://assets/fonts/gemunu-libre-v8-latin-700.ttf" id="8_wfdrs"]
 [ext_resource type="Script" uid="uid://l3bwpe43ph1m" path="res://scenes/game_ui/next_tetromino.gd" id="9_ldw0e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t24f4"]
 atlas = ExtResource("5_napug")
 region = Rect2(50, 100, 150, 240)
-
-[sub_resource type="LabelSettings" id="LabelSettings_w3g2g"]
-line_spacing = 7.0
-font = ExtResource("8_wfdrs")
-font_size = 24
-outline_size = 2
-outline_color = Color(0.670588, 0.890196, 1, 1)
-shadow_size = 2
-shadow_color = Color(0, 0, 0, 0.796078)
-shadow_offset = Vector2(-2, 2)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1i64n"]
 load_path = "res://.godot/imported/Background.png-5d8bd16cba4ceaf0e8a84382138da42f.ctex"
@@ -39,45 +28,6 @@ region = Rect2(50, 100, 300, 41)
 atlas = ExtResource("5_napug")
 region = Rect2(50, 100, 300, 600)
 filter_clip = true
-
-[sub_resource type="Animation" id="Animation_w3g2g"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PausedMessage/VBoxContainer/PressStartLabel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_31rk5"]
-resource_name = "flash"
-length = 0.7
-loop_mode = 1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PausedMessage/VBoxContainer/PressStartLabel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_napug"]
-_data = {
-&"RESET": SubResource("Animation_w3g2g"),
-&"flash": SubResource("Animation_31rk5")
-}
 
 [sub_resource type="LabelSettings" id="LabelSettings_hk0ve"]
 font = ExtResource("8_wfdrs")
@@ -204,29 +154,23 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.533333)
 
-[node name="MarginContainer" type="MarginContainer" parent="Level/GameUI/HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = -5
-theme_override_constants/margin_top = -21
-
-[node name="ControlContainer" type="VBoxContainer" parent="Level/GameUI/HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/MarginContainer"]
+[node name="ControlContainer" type="VBoxContainer" parent="Level/GameUI/HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 10
 
-[node name="ControlsLabel" type="Label" parent="Level/GameUI/HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/MarginContainer/ControlContainer"]
+[node name="ControlsLabel" type="Label" parent="Level/GameUI/HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/ControlContainer"]
 layout_mode = 2
 text = "KEYS"
 label_settings = ExtResource("6_1jeig")
 
-[node name="ControlsValuesLabel" type="Label" parent="Level/GameUI/HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/MarginContainer/ControlContainer"]
+[node name="ControlsValuesLabel" type="Label" parent="Level/GameUI/HBoxContainer/LeftContainer/Left/LeftTop/CenterContainer/ControlContainer"]
 layout_mode = 2
-text = "ROTATE:        W
-LEFT:                A
-RIGHT:            D
-SOFT:               S
-HARD:  SPACE"
-label_settings = SubResource("LabelSettings_w3g2g")
+text = "LEFT: ←
+RIGHT: →
+ROTATE: ↑
+FAST: ↓
+INSTANT: CTRL"
+label_settings = ExtResource("7_hhmec")
 
 [node name="LeftBottom" type="Control" parent="Level/GameUI/HBoxContainer/LeftContainer/Left"]
 layout_mode = 2
@@ -362,9 +306,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_e13be")
 
-[node name="MainCoverGrid" type="ColorRect" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect"]
-unique_name_in_owner = true
-z_index = 1
+[node name="ColorRect" type="ColorRect" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect"]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
@@ -374,52 +316,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0.0666667, 0.203922, 0.282353, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/MainCoverGrid"]
-process_mode = 3
-libraries = {
-&"": SubResource("AnimationLibrary_napug")
-}
-autoplay = "flash"
-
-[node name="PausedMessage" type="VBoxContainer" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/MainCoverGrid"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/MainCoverGrid/PausedMessage"]
-layout_mode = 2
-size_flags_vertical = 6
-
-[node name="PausedLabel" type="Label" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/MainCoverGrid/PausedMessage/VBoxContainer"]
-unique_name_in_owner = true
-process_mode = 3
-visible = false
-layout_mode = 2
-text = "PAUSED"
-label_settings = ExtResource("7_hhmec")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PressStartLabel" type="Label" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/MainCoverGrid/PausedMessage/VBoxContainer"]
-unique_name_in_owner = true
-process_mode = 3
-layout_mode = 2
-size_flags_horizontal = 4
-text = "PRESS ENTER"
-label_settings = ExtResource("7_hhmec")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="GameOverStatsContainer" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/MainCoverGrid" instance=ExtResource("8_w3g2g")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-anchors_preset = 0
+color = Color(0, 0, 0, 0.533333)
 
 [node name="LogicalGrid" type="Control" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid"]
 layout_mode = 1
@@ -534,9 +431,7 @@ texture = SubResource("CompressedTexture2D_1i64n")
 region_enabled = true
 region_rect = Rect2(95, 145, 150, 90)
 
-[node name="NextTetrominoCoverGrid" type="ColorRect" parent="Level/GameUI/HBoxContainer/RightContainer/Right/RightBottom/NextTetromino/Background"]
-unique_name_in_owner = true
-z_index = 1
+[node name="ColorRect" type="ColorRect" parent="Level/GameUI/HBoxContainer/RightContainer/Right/RightBottom/NextTetromino/Background"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -546,7 +441,7 @@ offset_right = -75.0
 offset_bottom = -45.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0666667, 0.203922, 0.282353, 1)
+color = Color(0, 0, 0, 0.533333)
 
 [node name="LogicalGrid" type="Node2D" parent="Level/GameUI/HBoxContainer/RightContainer/Right/RightBottom/NextTetromino"]
 position = Vector2(14, 14)

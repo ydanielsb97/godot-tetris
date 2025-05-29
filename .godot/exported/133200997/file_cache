@@ -3,9 +3,12 @@ res://scenes/blocks/single_block.tscn::796bbd3bd6d87cd3594259000df5669f::1748186
 res://scenes/blocks/tetromino.tscn::7450ce540a4a1c0e6cd21370f60443c2::1748180570::res://.godot/exported/133200997/export-1a84bf0c5b2a7cc428adf15941f0498e-tetromino.scn
 res://scenes/blocks/TetrominoTEST.tscn::427187e8634eb9fb12191d2f354b390f::1748001402::res://.godot/exported/133200997/export-40a07fc41272301cd08df5248fca198f-TetrominoTEST.scn
 res://scenes/levels/level_1/border.tscn::5c668b25af2d5d7b2364d46c54c8ab78::1748300959::res://.godot/exported/133200997/export-f799557756e51053b8db9d30dd86a613-border.scn
-res://scenes/levels/level_1/level_1.tscn::8ed3740dcf15e595efbb31ffc5ee6a76::1748403135::res://.godot/exported/133200997/export-09f66ca96b446d5b5f4c5fa462747d92-level_1.scn
+res://scenes/levels/level_1/level_1.tscn::a36e717a9a2942428680f903762e6433::1748521101::res://.godot/exported/133200997/export-09f66ca96b446d5b5f4c5fa462747d92-level_1.scn
 res://scenes/blocks/destroy_fx.tscn::674ec03f9fa0936f62ba5b1b4b7c3f09::1748180745::res://.godot/exported/133200997/export-01d587de8df67d3b2bd52c3e7aca31d2-destroy_fx.scn
-res://scenes/game_ui/game_ui.tscn::63b6deaf979c3902cb165ccb4c0e162d::1748403135::res://.godot/exported/133200997/export-cd352c23c97564e05709ea2332d4db05-game_ui.scn
-res://default_bus_layout.tres::5d87ad71cd374378fc8d869f5964c87f::1748401658::res://.godot/exported/133200997/export-19246414aa9fb561ced4b8dce477acec-default_bus_layout.res
-res://scenes/game_ui/white_title_24.tres::af235947275cc8949d9c9fbc574da209::1748402531::res://.godot/exported/133200997/export-99e15ab2b40ab89e09e28475255d8d93-white_title_24.res
-res://scenes/game_ui/white_title_32.tres::f84b30b26d6d87d7cbd62635e1d21f88::1748402531::res://.godot/exported/133200997/export-d0ee64a16e166856dc01ebc88dfca16d-white_title_32.res
+res://scenes/game_ui/game_ui.tscn::65e26059f671261c7f1fb24951fb5b6a::1748466976::res://.godot/exported/133200997/export-cd352c23c97564e05709ea2332d4db05-game_ui.scn
+res://default_bus_layout.tres::ef9839209dbbd793202e70d1da4bcf00::1748520014::res://.godot/exported/133200997/export-19246414aa9fb561ced4b8dce477acec-default_bus_layout.res
+res://scenes/game_ui/white_title_24.tres::af235947275cc8949d9c9fbc574da209::1748518424::res://.godot/exported/133200997/export-99e15ab2b40ab89e09e28475255d8d93-white_title_24.res
+res://scenes/game_ui/white_title_32.tres::f84b30b26d6d87d7cbd62635e1d21f88::1748515576::res://.godot/exported/133200997/export-d0ee64a16e166856dc01ebc88dfca16d-white_title_32.res
+res://scenes/game_ui/lines_count.tscn::7797fa498db6c0cc34b997cc67a08bad::1748459696::res://.godot/exported/133200997/export-825b70a3da89ea7c0e3188bf44ab6366-lines_count.scn
+res://scenes/game_ui/main_grid.tscn::db75d1fd5c37ac5419e454354437eaf9::1748466976::res://.godot/exported/133200997/export-7e7017f84aa77d9fe6fe8d7def5ca27c-main_grid.scn
+res://scenes/game_ui/game_over_stats_ui.tscn::1077d6d45dac712f95dea6e59ab701e4::1748519510::res://.godot/exported/133200997/export-0bbdfcda23717c42c36339fc9486fa26-game_over_stats_ui.scn

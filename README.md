@@ -4,6 +4,12 @@ A clean and responsive Tetris clone built with **Godot Engine**, featuring the 7
 
 ---
 
+## 🎮 Play the game
+
+GAME: https://ys97.itch.io/tetrisrecreation
+
+---
+
 ## 🚀 Features
 
 - All 7 classic Tetromino shapes (I, O, T, L, J, S, Z)
@@ -27,12 +33,3 @@ You can find the asset pack here:
 ## 📦 Requirements to Develop
 
 - [Godot Engine 4.x](https://godotengine.org/download)
-
----
-
-## 🛠️ How to Play
-
-**Coming soon...**  
-The project is still under development and polishing. Instructions for building and running the game will be added here shortly.
-
----

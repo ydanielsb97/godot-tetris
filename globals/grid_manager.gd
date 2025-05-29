@@ -1,7 +1,5 @@
 extends Node
 
-
-
 const CELL_SIZE: int = 30
 const GRID_MARGING: Vector2i = Vector2i(-15, -15)
 const GRID_COLUMNS: int = 10
@@ -99,7 +97,6 @@ func move_group_blocks_to_direction(from: Array[Vector2i], to: Vector2i, tween_t
 		var cell_to = all_cells_to[index]
 		cell.block.position = Vector2(cell_to.coords * CELL_SIZE - GRID_MARGING)
 		cell.block.visible = cell_to.coords.y >= 2
-		#tween.tween_property(cell.block, "position", Vector2(cell_to.coords * CELL_SIZE - GRID_MARGING), tween_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 		
 		cell_to.set_block(cell.block)
 		cell.set_block(null)
@@ -200,7 +197,8 @@ func check_row_complete(rows_to_check: Array[int]) -> void:
 	
 	for row in rows_to_delete:
 		higher_animation_time = destroy_row(row)
-	
+		
+	SignalHub.emit_rows_destroyed(len(rows_to_delete))
 	ScoreManager.register_clear(len(rows_to_delete))
 	
 	await get_tree().create_timer(higher_animation_time / 2).timeout
@@ -209,14 +207,6 @@ func check_row_complete(rows_to_check: Array[int]) -> void:
 		await move_down_from_row(row)
 
 	SignalHub.emit_ready_to_add_block()
-
-func check_game_over() -> bool:
-	for x in range(GRID_COLUMNS):
-		var cell = get_cell_by_coords(Vector2i(x, 0))
-		if cell.block: 
-			SignalHub.emit_game_over()
-			return true
-	return false
 
 func destroy_row(row: int) -> float:
 	var higher_animation_time: float = 0.0

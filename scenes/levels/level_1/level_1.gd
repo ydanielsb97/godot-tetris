@@ -6,6 +6,7 @@ extends Node2D
 @onready var press_start_label: Label = %PressStartLabel
 @onready var paused_label: Label = %PausedLabel
 @onready var game_over_stats_container: MarginContainer = %GameOverStatsContainer
+@onready var animation_player: AnimationPlayer = $Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/AnimationPlayer
 
 const OVERLAY_COLOR: Color = Color("113448")
 const DEFAULT_OVERLAY_COLOR: Color = Color("00000088")
@@ -22,6 +23,7 @@ var next_tetromino_shape: TetrominoHelper.TetrominoType
 
 var grid := []
 
+var checking_has_landed: bool = false
 var hold_left_timer := 0.0
 var hold_right_timer := 0.0
 const FIRST_HOLD_DELAY := 0.2  # Time before repeat starts
@@ -86,6 +88,11 @@ func _enter_tree() -> void:
 	SignalHub.game_start.connect(on_game_start)
 	SignalHub.game_paused.connect(on_game_paused)
 	SignalHub.game_over.connect(on_game_over)
+	SignalHub.rows_destroyed.connect(on_rows_destroyed)
+
+func on_rows_destroyed(rows: int) -> void:
+	if rows == 4:
+		animation_player.play("tetris_flash")
 
 func on_game_paused(paused: bool) -> void:
 	handle_paused_message(paused)
@@ -99,9 +106,10 @@ func _ready() -> void:
 
 func on_ready_to_add_block() -> void:
 	draw_random_block()
-	GameManager.start_timer()
+	GameManager.set_level_speed()
+	checking_has_landed = false
 
-func on_has_landed() -> void:
+func has_landed() -> void:
 	GameManager.stop_timer()
 	reset_tetromino()
 	GridManager.check_row_complete(current_tetromino.get_current_rows())
@@ -120,9 +128,8 @@ func reset_tetromino() -> void:
 		SfxManager.play_sfx(SfxManager.SFX.HARD_DROP)
 	else:
 		SfxManager.play_sfx(SfxManager.SFX.LANDING)
-		
+	
 	GameManager.hard_drop = false
-	GameManager.set_level_speed()
 
 func handle_paused_message(show: bool) -> void:
 	if show:
@@ -147,11 +154,13 @@ func hide_overlay() -> void:
 	next_tetromino_color_rect.color = DEFAULT_OVERLAY_COLOR
 
 func _on_timer_timeout() -> void:
-	if GameManager.game_over or !current_tetromino: return
+	if GameManager.game_over or !current_tetromino or checking_has_landed: return
 	
+	checking_has_landed = true
 	if current_tetromino.check_has_landed():
-		on_has_landed()
+		has_landed()
 	else:
 		if GameManager.hard_drop:
 			current_tetromino.move_down() # move twice each tick when is fast fall to add smoothness
 		current_tetromino.move_down()
+		checking_has_landed = false

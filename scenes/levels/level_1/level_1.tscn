@@ -1,9 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://dcaugkfbvcxcw"]
+[gd_scene load_steps=27 format=3 uid="uid://dcaugkfbvcxcw"]
 
 [ext_resource type="Script" uid="uid://br3dn6u4iug0o" path="res://scenes/levels/level_1/level_1.gd" id="1_5o1mp"]
 [ext_resource type="Texture2D" uid="uid://dxoeew6poflmg" path="res://assets/images/Pattern03.png" id="2_spwf2"]
 [ext_resource type="Script" uid="uid://db0arifw57h1v" path="res://scenes/game_ui/game_ui.gd" id="3_31rk5"]
-[ext_resource type="AudioStream" uid="uid://d2l05cba8w2e8" path="res://assets/audios/tetris.mp3" id="4_spwf2"]
 [ext_resource type="Texture2D" uid="uid://dla07ym306ib" path="res://assets/images/Border.png" id="4_w3g2g"]
 [ext_resource type="Texture2D" uid="uid://ddbwsg68tqxo0" path="res://assets/images/Background.png" id="5_napug"]
 [ext_resource type="LabelSettings" uid="uid://drlsymnisapk1" path="res://scenes/game_ui/white_title_32.tres" id="6_1jeig"]
@@ -11,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c1j3trw2gbplp" path="res://scenes/game_ui/game_over_stats_ui.tscn" id="8_w3g2g"]
 [ext_resource type="FontFile" uid="uid://cd2gu28abu5ll" path="res://assets/fonts/gemunu-libre-v8-latin-700.ttf" id="8_wfdrs"]
 [ext_resource type="Script" uid="uid://l3bwpe43ph1m" path="res://scenes/game_ui/next_tetromino.gd" id="9_ldw0e"]
+[ext_resource type="AudioStream" uid="uid://bnane38gvpoih" path="res://assets/audios/tetris (mp3cut.net) (1).mp3" id="11_w3g2g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t24f4"]
 atlas = ExtResource("5_napug")
@@ -39,6 +39,50 @@ region = Rect2(50, 100, 300, 41)
 atlas = ExtResource("5_napug")
 region = Rect2(50, 100, 300, 600)
 filter_clip = true
+
+[sub_resource type="Animation" id="Animation_1jeig"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%TetrisEffect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_napug"]
+resource_name = "flash_line_clear"
+length = 0.2
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_hhmec"]
+resource_name = "tetris_flash"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%TetrisEffect:color")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.670588, 0.890196, 1, 1), Color(100, 100, 100, 0), Color(0.670588, 0.890196, 1, 1), Color(100, 100, 100, 0), Color(0.670588, 0.890196, 1, 1), Color(100, 100, 100, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hhmec"]
+_data = {
+&"RESET": SubResource("Animation_1jeig"),
+&"flash_line_clear": SubResource("Animation_napug"),
+&"tetris_flash": SubResource("Animation_hhmec")
+}
 
 [sub_resource type="Animation" id="Animation_w3g2g"]
 length = 0.001
@@ -362,6 +406,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_e13be")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect"]
+root_node = NodePath("../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_hhmec")
+}
+
 [node name="MainCoverGrid" type="ColorRect" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect"]
 unique_name_in_owner = true
 z_index = 1
@@ -420,6 +470,20 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 anchors_preset = 0
+
+[node name="TetrisEffect" type="ColorRect" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect"]
+unique_name_in_owner = true
+z_index = 1
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
 
 [node name="LogicalGrid" type="Control" parent="Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid"]
 layout_mode = 1
@@ -552,6 +616,7 @@ color = Color(0.0666667, 0.203922, 0.282353, 1)
 position = Vector2(14, 14)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Level"]
-stream = ExtResource("4_spwf2")
+stream = ExtResource("11_w3g2g")
 autoplay = true
 bus = &"Music"
+parameters/looping = true

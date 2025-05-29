@@ -50,4 +50,5 @@ func update_level() -> void:
 	
 	if new_level > current_score.level:
 		current_score.level = new_level
+		SfxManager.play_sfx(SfxManager.SFX.LEVEL_UP)
 		# Emit level up to change blocks colors

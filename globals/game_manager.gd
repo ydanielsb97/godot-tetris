@@ -2,8 +2,6 @@ extends Node
 
 var timer: Timer
 
-
-
 var game_over: bool = false
 var game_started: bool = false
 var game_paused: bool = false

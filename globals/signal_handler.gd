@@ -7,10 +7,14 @@ signal game_paused(paused)
 signal game_over
 signal has_landed
 signal ready_to_add_block
+signal rows_destroyed(rows: int)
 
 func emit_next_tetromino(tetromino_shape: TetrominoHelper.TetrominoType) -> void:
 	next_tetromino.emit(tetromino_shape)
 
+func emit_rows_destroyed(rows: int) -> void:
+	rows_destroyed.emit(rows)
+	
 func emit_score_update() -> void:
 	score_update.emit()
 

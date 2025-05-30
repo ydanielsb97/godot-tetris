@@ -73,7 +73,7 @@ func move(target_direction: Vector2i) -> bool:
 	
 	return GridManager.move_group_blocks_to_direction(all_coords, target_direction)
 
-func rotate_custom() -> bool:	
+func rotate_custom(next_index_to_sum: int) -> bool:
 	var all_coords: Array[Vector2i]
 
 	for child: SingleBlock in get_children():
@@ -82,19 +82,19 @@ func rotate_custom() -> bool:
 	var tetromino = TetrominoHelper.TETROMINO_SHAPES[current_tetromino_shape]["coords"]
 	var array_coords = tetromino[current_index_shape % tetromino.size()]
 	
-	var next_rotation: Array[Vector2i] = get_next_rotation()
+	var next_rotation: Array[Vector2i] = get_next_rotation(next_index_to_sum)
 	
 	for index in range(len(next_rotation)):
 		var val1 = all_coords[index] - array_coords[index]
 		next_rotation[index] += val1
 	
 	var changed = GridManager.move_group_blocks(all_coords, next_rotation)
-	if !changed: current_index_shape -= 1
+	if !changed: current_index_shape = current_index_shape + (next_index_to_sum * -1)
 	return changed
 
-func get_next_rotation() -> Array[Vector2i]:
+func get_next_rotation(index_to: int) -> Array[Vector2i]:
 	var tetromino = TetrominoHelper.TETROMINO_SHAPES[current_tetromino_shape]["coords"]
-	current_index_shape += 1
+	current_index_shape = current_index_shape + index_to
 	var array_coords: Array = tetromino[current_index_shape % tetromino.size()]
 	var new_array_cords: Array[Vector2i] = []
 	new_array_cords.assign(array_coords.map(func (v): return v as Vector2i))

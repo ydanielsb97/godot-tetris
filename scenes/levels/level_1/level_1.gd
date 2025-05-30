@@ -1,12 +1,11 @@
 extends Node2D
-
-@onready var logical_grid: Control = $Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/LogicalGrid
+@onready var logical_grid: Control = %LogicalGrid
 @onready var main_color_rect: ColorRect = %MainCoverGrid
 @onready var next_tetromino_color_rect: ColorRect = %NextTetrominoCoverGrid
 @onready var press_start_label: Label = %PressStartLabel
 @onready var paused_label: Label = %PausedLabel
 @onready var game_over_stats_container: MarginContainer = %GameOverStatsContainer
-@onready var animation_player: AnimationPlayer = $Level/GameUI/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/AnimationPlayer
+@onready var animation_player: AnimationPlayer = $Level/GameUI/HBoxContainer/HBoxContainer/CenterContainer/Center/MainGrid/CenterContainer/TextureRect/AnimationPlayer
 
 const OVERLAY_COLOR: Color = Color("113448")
 const DEFAULT_OVERLAY_COLOR: Color = Color("00000088")
@@ -28,11 +27,10 @@ var hold_left_timer := 0.0
 var hold_right_timer := 0.0
 const FIRST_HOLD_DELAY := 0.2  # Time before repeat starts
 const HOLD_REPEAT_DELAY := 0.05  # Time between repeats
+const INPUT_DELAY: float = 1.0
 
-func _input(event: InputEvent) -> void:
-
-	if current_tetromino == null or GameManager.hard_drop:
-		return
+func _unhandled_input(event: InputEvent) -> void:
+	if cant_handle_input(): return
 
 	if event.is_action_pressed("speed_up"):
 		GameManager.set_soft_drop_speed()
@@ -40,22 +38,35 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("speed_up"):
 		GameManager.set_level_speed()
 
-	if event.is_action_pressed("turn"):
-		var rotated = current_tetromino.rotate_custom()
-		if rotated: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
-
-	if event.is_action_pressed("left"):
-		var moved = current_tetromino.move_left()
-		hold_left_timer = FIRST_HOLD_DELAY
-		if moved: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
-
-	if event.is_action_pressed("right"):
-		var moved = current_tetromino.move_right()
-		hold_right_timer = FIRST_HOLD_DELAY
-		if moved: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
+	rotate_tetromino(Input.get_axis("turn_counter_clockwise", "turn_clockwise"))
+	
+	move_horizontally(Input.get_axis("left", "right"))
 
 	if event.is_action_pressed("instant_fall"):
 		GameManager.set_hard_drop_speed()
+
+func move_horizontally(is_left: int) -> void:
+	if cant_handle_input() or is_left == 0: return
+	
+	var moved: bool
+	
+	if is_left < 0:
+		moved = current_tetromino.move_left()
+		hold_left_timer = FIRST_HOLD_DELAY
+	else:
+		moved = current_tetromino.move_right()
+		hold_right_timer = FIRST_HOLD_DELAY
+		
+	if moved: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
+
+func cant_handle_input() -> bool:
+	return current_tetromino == null or GameManager.hard_drop
+
+func rotate_tetromino(is_clockwise) -> void:
+	if cant_handle_input() or is_clockwise == 0: return
+	
+	var rotated = current_tetromino.rotate_custom(is_clockwise)
+	if rotated: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
 
 func _process(delta: float) -> void:
 	if current_tetromino == null or GameManager.hard_drop:
@@ -103,6 +114,16 @@ func on_game_over() -> void:
 
 func _ready() -> void:
 	GameManager.timer.timeout.connect(_on_timer_timeout)
+	
+	show_all_mobile_controls(is_mobile())
+
+func show_all_mobile_controls(show: bool) -> void:
+	for node in get_tree().get_nodes_in_group("mobile_controls"):
+		if show: node.show() 
+		else: node.hide()
+
+func is_mobile() -> bool:
+	return OS.has_feature("web_android") or OS.has_feature("web_ios")
 
 func on_ready_to_add_block() -> void:
 	draw_random_block()
@@ -164,3 +185,41 @@ func _on_timer_timeout() -> void:
 			current_tetromino.move_down() # move twice each tick when is fast fall to add smoothness
 		current_tetromino.move_down()
 		checking_has_landed = false
+
+func _on_texture_button_button_down() -> void:
+	if cant_handle_input(): return
+	rotate_tetromino(1)
+
+func _on_texture_button_2_button_down() -> void:
+	if cant_handle_input(): return
+	GameManager.set_hard_drop_speed()
+
+
+func _on_move_left_button_button_down() -> void:
+	if cant_handle_input(): return
+	move_horizontally(-1)
+
+
+func _on_move_right_button_button_down() -> void:
+	if cant_handle_input(): return
+	move_horizontally(1)
+
+
+func _on_speed_up_button_button_down() -> void:
+	if cant_handle_input(): return
+	GameManager.set_soft_drop_speed()
+
+
+func _on_move_right_button_pressed() -> void:
+	if cant_handle_input(): return
+	move_horizontally(1)
+
+
+func _on_enter_button_button_down() -> void:
+	if cant_handle_input(): return
+	GameManager.handle_start_action()
+
+
+func _on_speed_up_button_button_up() -> void:
+	if cant_handle_input(): return
+	GameManager.set_level_speed()

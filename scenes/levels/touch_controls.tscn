@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1uvb5ns05n6w"]
+
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_sv3fa"]
+
+[node name="TouchControls" type="CanvasLayer"]
+
+[node name="Virtual Joystick" parent="." instance=ExtResource("1_sv3fa")]
+offset_top = -720.0
+offset_bottom = -420.0
+pressed_color = Color(0.931066, 0, 0.116562, 1)
+action_left = "left"
+action_right = "right"
+action_up = "turn"
+action_down = "speed_up"

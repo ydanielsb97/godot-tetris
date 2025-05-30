@@ -3,9 +3,3 @@ res://globals/grid_manager.gd
 res://scenes/blocks/tetromino.gd
 res://scenes/game_ui/white_title_32.tres
 res://scenes/game_ui/white_title_24.tres
-res://globals/signal_handler.gd
-res://scenes/levels/level_1/level_1.gd
-res://classes/tetromino_helper.gd
-res://globals/sfx_manager.gd
-res://globals/score_manager.gd
-res://globals/game_manager.gd

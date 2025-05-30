@@ -21,12 +21,15 @@ func _ready() -> void:
 	timer.process_mode = Node.PROCESS_MODE_PAUSABLE
 	add_child(timer)
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("start"):
-		if !game_started or game_over:
-			start_game()
-		else:
-			pause_game()
+		handle_start_action()
+
+func handle_start_action() -> void:
+	if !game_started or game_over:
+		start_game()
+	else:
+		pause_game()
 
 func pause_game() -> void:
 	if game_over: return

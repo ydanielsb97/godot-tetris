@@ -23,11 +23,34 @@ var next_tetromino_shape: TetrominoHelper.TetrominoType
 var grid := []
 
 var checking_has_landed: bool = false
-var hold_left_timer := 0.0
-var hold_right_timer := 0.0
-const FIRST_HOLD_DELAY := 0.2  # Time before repeat starts
-const HOLD_REPEAT_DELAY := 0.05  # Time between repeats
+var hold_left_timer: float= 0.0
+var hold_right_timer: float= 0.0
+const FIRST_HOLD_DELAY: float = 0.26
+const HOLD_REPEAT_DELAY: float = 0.0167
+const LOCK_DELAY: float = 0.2
 const INPUT_DELAY: float = 1.0
+var can_hold: bool = false
+var can_hold_timer: Timer
+
+func _enter_tree() -> void:
+	SignalHub.ready_to_add_block.connect(on_ready_to_add_block)
+	SignalHub.game_start.connect(on_game_start)
+	SignalHub.game_paused.connect(on_game_paused)
+	SignalHub.game_over.connect(on_game_over)
+	SignalHub.rows_destroyed.connect(on_rows_destroyed)
+
+func _ready() -> void:
+	can_hold_timer = Timer.new()
+	can_hold_timer.one_shot = true
+	can_hold_timer.autostart = false
+	can_hold_timer.wait_time = FIRST_HOLD_DELAY
+	
+	add_child(can_hold_timer)
+	
+	can_hold_timer.timeout.connect(handle_can_hold_timer)
+	
+	GameManager.timer.timeout.connect(_on_timer_timeout)
+	show_all_mobile_controls(is_mobile())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if cant_handle_input(): return
@@ -37,13 +60,54 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_released("speed_up"):
 		GameManager.set_level_speed()
-
-	rotate_tetromino(Input.get_axis("turn_counter_clockwise", "turn_clockwise"))
 	
-	move_horizontally(Input.get_axis("left", "right"))
+	if event.is_action_pressed("turn_counter_clockwise"):
+		ActionQueue.add(rotate_tetromino, [-1])
+	
+	if event.is_action_pressed("turn_clockwise"):
+		ActionQueue.add(rotate_tetromino, [1])
+
+	if event.is_action_pressed("left"):
+		ActionQueue.add(move_horizontally, [-1])
+		handle_can_hold()
+
+	if event.is_action_pressed("right"):
+		ActionQueue.add(move_horizontally, [1])
+		handle_can_hold()
+
+	if event.is_action_released("left"):
+		can_hold_timer.stop()
+		can_hold = false
+
+	if event.is_action_released("right"):
+		can_hold_timer.stop()
+		can_hold = false
 
 	if event.is_action_pressed("instant_fall"):
 		GameManager.set_hard_drop_speed()
+
+func _physics_process(delta: float) -> void:
+	if cant_handle_input():
+		return
+	
+	if can_hold:
+		if Input.is_action_pressed("left"):
+			await get_tree().create_timer(HOLD_REPEAT_DELAY).timeout
+			ActionQueue.add(move_horizontally, [-1])
+		elif Input.is_action_pressed("right"):
+			await get_tree().create_timer(HOLD_REPEAT_DELAY).timeout
+			ActionQueue.add(move_horizontally, [1])
+
+func handle_can_hold() -> void:
+	if can_hold: return
+	can_hold_timer.start()
+
+func handle_can_hold_timer() -> void:
+	can_hold = true
+
+func handle_can_lock_tetromino() -> void:
+	reset_tetromino()
+	GridManager.check_row_complete(current_tetromino.get_current_rows())
 
 func move_horizontally(is_left: int) -> void:
 	if cant_handle_input() or is_left == 0: return
@@ -52,10 +116,8 @@ func move_horizontally(is_left: int) -> void:
 	
 	if is_left < 0:
 		moved = current_tetromino.move_left()
-		hold_left_timer = FIRST_HOLD_DELAY
 	else:
 		moved = current_tetromino.move_right()
-		hold_right_timer = FIRST_HOLD_DELAY
 		
 	if moved: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
 
@@ -68,38 +130,12 @@ func rotate_tetromino(is_clockwise) -> void:
 	var rotated = current_tetromino.rotate_custom(is_clockwise)
 	if rotated: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
 
-func _process(delta: float) -> void:
-	if current_tetromino == null or GameManager.hard_drop:
-		return
-	if Input.is_action_pressed("left"):
-		hold_left_timer -= delta
-		if hold_left_timer <= 0:
-			var moved = current_tetromino.move_left()
-			hold_left_timer = HOLD_REPEAT_DELAY
-			if moved: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
-	elif Input.is_action_pressed("right"):
-		hold_right_timer -= delta
-		if hold_right_timer <= 0:
-			var moved = current_tetromino.move_right()
-			hold_right_timer = HOLD_REPEAT_DELAY
-			if moved: SfxManager.play_sfx(SfxManager.SFX.ROTATE)
-	else:
-		hold_left_timer = 0
-		hold_right_timer = 0
-
 func on_game_start() -> void:
 	hide_overlay()
 	press_start_label.hide()
 	game_over_stats_container.hide()
 	next_tetromino_shape = TetrominoHelper.get_random_tetromino_shape()
 	draw_random_block()
-
-func _enter_tree() -> void:
-	SignalHub.ready_to_add_block.connect(on_ready_to_add_block)
-	SignalHub.game_start.connect(on_game_start)
-	SignalHub.game_paused.connect(on_game_paused)
-	SignalHub.game_over.connect(on_game_over)
-	SignalHub.rows_destroyed.connect(on_rows_destroyed)
 
 func on_rows_destroyed(rows: int) -> void:
 	if rows == 4:
@@ -111,11 +147,6 @@ func on_game_paused(paused: bool) -> void:
 func on_game_over() -> void:
 	show_overlay()
 	game_over_stats_container.show()
-
-func _ready() -> void:
-	GameManager.timer.timeout.connect(_on_timer_timeout)
-	
-	show_all_mobile_controls(is_mobile())
 
 func show_all_mobile_controls(show: bool) -> void:
 	for node in get_tree().get_nodes_in_group("mobile_controls"):
@@ -129,6 +160,7 @@ func on_ready_to_add_block() -> void:
 	draw_random_block()
 	GameManager.set_level_speed()
 	checking_has_landed = false
+	can_hold = false
 
 func has_landed() -> void:
 	GameManager.stop_timer()
@@ -145,7 +177,7 @@ func draw_random_block() -> void:
 
 func reset_tetromino() -> void:
 	if GameManager.hard_drop:
-		current_tetromino.toggle_fire(true)
+		current_tetromino.activate_fire()
 		SfxManager.play_sfx(SfxManager.SFX.HARD_DROP)
 	else:
 		SfxManager.play_sfx(SfxManager.SFX.LANDING)
@@ -182,8 +214,10 @@ func _on_timer_timeout() -> void:
 		has_landed()
 	else:
 		if GameManager.hard_drop:
-			current_tetromino.move_down() # move twice each tick when is fast fall to add smoothness
-		current_tetromino.move_down()
+			current_tetromino.move_down()
+			current_tetromino.move_down() 
+		else:
+			ActionQueue.add(current_tetromino.move_down)
 		checking_has_landed = false
 
 func _on_texture_button_button_down() -> void:
@@ -196,12 +230,10 @@ func _on_texture_button_2_button_down() -> void:
 
 
 func _on_move_left_button_button_down() -> void:
-	if cant_handle_input(): return
 	move_horizontally(-1)
 
 
 func _on_move_right_button_button_down() -> void:
-	if cant_handle_input(): return
 	move_horizontally(1)
 
 
@@ -216,7 +248,6 @@ func _on_move_right_button_pressed() -> void:
 
 
 func _on_enter_button_button_down() -> void:
-	if cant_handle_input(): return
 	GameManager.handle_start_action()
 
 

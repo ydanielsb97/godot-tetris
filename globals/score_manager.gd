@@ -9,6 +9,7 @@ func _ready() -> void:
 
 func start_score() -> void:
 	current_score = HighScoreResource.new()
+	#current_score.level = 18
 	is_high_score = false
 	SignalHub.emit_score_update()
 	
@@ -46,7 +47,7 @@ func register_clear(lines_cleared: int):
 	SignalHub.emit_score_update()
 
 func update_level() -> void:
-	var new_level = current_score.lines_cleared / 10
+	var new_level: int = current_score.lines_cleared / 10
 	
 	if new_level > current_score.level:
 		current_score.level = new_level

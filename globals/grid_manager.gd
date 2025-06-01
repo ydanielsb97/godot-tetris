@@ -57,7 +57,7 @@ func move_block(from: Vector2i, to: Vector2i) -> bool:
 	
 	return true
 
-func move_group_blocks_to_direction(from: Array[Vector2i], to: Vector2i, tween_time: float = TWEEN_SPEED_TO_DIRECTION) -> bool:
+func move_group_blocks_to_direction(from: Array[Vector2i], to: Vector2i) -> bool:
 	var all_cells_from: Array[GridCell]
 	for from_one in from:
 		var cell_from = get_cell_by_coords(from_one)
@@ -192,32 +192,25 @@ func check_row_complete(rows_to_check: Array[int]) -> void:
 	if len(rows_to_delete) <= 0:
 		SignalHub.emit_ready_to_add_block()
 		return
-	
-	var higher_animation_time: float = 0.0
-	
+
 	for row in rows_to_delete:
-		higher_animation_time = destroy_row(row)
+		destroy_row(row)
 		
 	SignalHub.emit_rows_destroyed(len(rows_to_delete))
 	ScoreManager.register_clear(len(rows_to_delete))
 	
-	await get_tree().create_timer(higher_animation_time / 2).timeout
+	await get_tree().create_timer(.2).timeout
 	
 	for row in rows_to_delete:
-		await move_down_from_row(row)
+		move_down_from_row(row)
+		await get_tree().create_timer(.05).timeout
 
 	SignalHub.emit_ready_to_add_block()
 
-func destroy_row(row: int) -> float:
-	var higher_animation_time: float = 0.0
-	
+func destroy_row(row: int) -> void:
 	for x in range(GRID_COLUMNS):
 		var cell = get_cell_by_coords(Vector2i(x, row))
-		if cell.block.animation_length > higher_animation_time: 
-			higher_animation_time = cell.block.animation_length
-		
 		cell.destroy_block()
-	return higher_animation_time
 
 func move_down_from_row(row_from: int) -> void:
 	var positions_from: Array[Vector2i] = []
@@ -228,12 +221,12 @@ func move_down_from_row(row_from: int) -> void:
 				positions_from.append(Vector2i(x, current_row))
 	
 	if positions_from.is_empty(): return
-	var is_moved = await move_group_blocks_to_direction(positions_from, Vector2i.DOWN, 0.00)
+	var is_moved = move_group_blocks_to_direction(positions_from, Vector2i.DOWN)
 	
 	while is_moved:
 		for index in len(positions_from):
 			positions_from[index] += Vector2i.DOWN
-		is_moved = await move_group_blocks_to_direction(positions_from, Vector2i.DOWN, 0.00)
+		is_moved = move_group_blocks_to_direction(positions_from, Vector2i.DOWN)
 
 func get_cell_by_coords(coords: Vector2i) -> GridCell:
 	var found_index: int = get_cell_index_by_coords(coords)

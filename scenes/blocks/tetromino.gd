@@ -13,6 +13,7 @@ var relative_blocks: Array = []
 var game_level: Node
 var current_tetromino_shape: TetrominoHelper.TetrominoType
 var current_index_shape: int = 0
+var is_locked: bool = false
 
 func setup(coords_grid: Vector2i, tetromino_shape: TetrominoHelper.TetrominoType) -> void:
 	
@@ -56,8 +57,8 @@ func add_block(pos: Vector2i) -> void:
 	new_block.setup(block_texture)
 	GridManager.add_block(new_block, pos)
 
-func move_down() -> void:
-	move(Vector2i.DOWN)
+func move_down() -> bool:
+	return move(Vector2i.DOWN)
 	
 func move_left() -> bool:
 	return move(Vector2i.LEFT)
@@ -69,8 +70,7 @@ func move(target_direction: Vector2i) -> bool:
 	var all_coords: Array[Vector2i]
 
 	for child: SingleBlock in get_children():
-		all_coords.append(child.grid_coords)
-	
+		all_coords.append(child.grid_coords)	
 	return GridManager.move_group_blocks_to_direction(all_coords, target_direction)
 
 func rotate_custom(next_index_to_sum: int) -> bool:
@@ -118,7 +118,7 @@ func get_bounding_rect() -> Rect2:
 	
 	return rect
 
-func toggle_fire(activate: bool) -> void:
+func activate_fire() -> void:
 	var lower_position: Array[SingleBlock] = get_bottom_blocks()
 	for block in lower_position:
 		var new_fire_fx = FAST_FALL_FX.instantiate()

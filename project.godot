@@ -22,6 +22,7 @@ SignalHub="*res://globals/signal_handler.gd"
 ScoreManager="*res://globals/score_manager.gd"
 SfxManager="*res://globals/sfx_manager.gd"
 GameManager="*res://globals/game_manager.gd"
+ActionQueue="*res://globals/action_queue.gd"
 
 [display]
 

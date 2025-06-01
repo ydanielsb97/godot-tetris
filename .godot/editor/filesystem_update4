@@ -3,3 +3,5 @@ res://globals/grid_manager.gd
 res://scenes/blocks/tetromino.gd
 res://scenes/game_ui/white_title_32.tres
 res://scenes/game_ui/white_title_24.tres
+res://classes/tetromino_helper.gd
+res://globals/score_manager.gd

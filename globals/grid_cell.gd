@@ -15,5 +15,6 @@ func set_block(b: SingleBlock) -> void:
 
 func destroy_block() -> void:
 	if !block: return
-	block.destroy()
+	var old_block = block
 	block = null
+	old_block.destroy()

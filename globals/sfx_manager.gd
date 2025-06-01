@@ -33,7 +33,6 @@ var sounds_playing: Array[SFX] = []
 
 func play_sfx(sfx_type: SFX):
 	var audio = AudioStreamPlayer.new()
-	sfx_files[sfx_type]
 	audio.stream = sfx_files[sfx_type]
 	audio.bus = "SFX"
 	add_child(audio)

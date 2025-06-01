@@ -105,6 +105,7 @@ const SPEEDS: Dictionary[int, float] = {
 }
 
 static func get_random_tetromino_shape() -> TetrominoType:
+	#return TetrominoType.I
 	return TetrominoType.values().pick_random()
 
 static func get_level_speed() -> float:

@@ -9,6 +9,7 @@ point_count = 2
 [node name="DestroyFX" type="CPUParticles2D"]
 emitting = false
 amount = 20
+lifetime = 0.5
 one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
